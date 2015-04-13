@@ -15,10 +15,6 @@ Nigerian
   Overrides the current thread's CurrentUICulture property for all
   resource lookups using this strongly typed resource class.
 </summary>
-</member><member name="P:Nigerian.My.Resources.Resources.alien58">
-	<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
 </member><member name="P:Nigerian.My.Resources.Resources.back">
 	<summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -27,35 +23,11 @@ Nigerian
 	<summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
-</member><member name="P:Nigerian.My.Resources.Resources.enemy">
-	<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
-</member><member name="P:Nigerian.My.Resources.Resources.explodemore">
-	<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
 </member><member name="P:Nigerian.My.Resources.Resources.explosion">
 	<summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
-</member><member name="P:Nigerian.My.Resources.Resources.laser">
-	<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
-</member><member name="P:Nigerian.My.Resources.Resources.space">
-	<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
-</member><member name="P:Nigerian.My.Resources.Resources.strip">
-	<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
 </member><member name="P:Nigerian.My.Resources.Resources.tester">
-	<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
-</member><member name="P:Nigerian.My.Resources.Resources.yep">
 	<summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>

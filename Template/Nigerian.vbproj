@@ -147,31 +147,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\1.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\alien58.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\enemy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\explodemore.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\explosion.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\laser.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\space.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\strip.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\yep.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tester.bmp" />

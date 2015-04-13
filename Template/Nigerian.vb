@@ -19,7 +19,7 @@ Public Class Nigerian
         'surface of the control. We draw objects in GFX, which correlates to the BackBuffer variable
         'When it comes time to render, BackBuffer is then drawn to the form. This prevents flickering.
         GFX = Graphics.FromImage(BackBuffer)
-        terraintype(0) = My.Resources.alien58
+        terraintype(0) = Nothing
         'initialize terraintype array to contain any images found inside the /terrain directory
         For Each foundFile As String In My.Computer.FileSystem.GetFiles("graphics/terrain", FileIO.SearchOption.SearchAllSubDirectories)
             ReDim Preserve terraintype(terraintype.Length)
@@ -35,6 +35,7 @@ Public Class Nigerian
     End Structure
     Const LEVELSCROLL As Integer = 4
     Dim currentTerrain() As String 'array to contain terrain objects
+    Dim levelTerraFile As String = "terraintest.lvl"    'pending string for lvl file reference on initialization
     Dim canvasbounds As Rectangle
     Dim levelBounds As levelBnd
     Dim terraintype(0) As Image 'containing array for terrain types in /graphics/terrain directory
@@ -97,8 +98,7 @@ Public Class Nigerian
         Static opened As Boolean = False
         If opened Then
         Else
-            FileOpen(1, "terraintest.ini", OpenMode.Input)
-            Dim terrainString As String = My.Computer.FileSystem.ReadAllText("terraintest.lvl")
+            Dim terrainString As String = My.Computer.FileSystem.ReadAllText(levelTerraFile)
             MsgBox("the total terrain file is " & terrainString)
             terrainArray = Split(terrainString, ",")  'replace with terrainarray when possible
             For line As Integer = 0 To 2
@@ -131,7 +131,6 @@ Public Class Nigerian
                 Next
             Next
             opened = True
-            FileClose(1)
         End If
         Return 0
     End Function

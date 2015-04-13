@@ -44,4 +44,8 @@
             editorWindow.Activate()
         End If
     End Sub
+
+    Private Sub LiberianInit_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        frmMainMenu.wakeMenu()
+    End Sub
 End Class
