@@ -1,5 +1,5 @@
 ﻿Public Class Liberian
-    Sub New(passedterrainfile As String)
+    Sub New(passedterrainfile As String, size As String)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -10,17 +10,34 @@
         Me.KeyPreview = True    'enable keypress event handlers
         SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         'set backbuffer bitmap to be the size of containing label
-        BackBuffer = New Bitmap(level.Width, level.Height)
+        levelSize = size
+        Select Case levelSize
+            Case "Tiny"
+                BackBuffer = New Bitmap(256, 256)
+            Case "Large"
+                BackBuffer = New Bitmap(512, 512)
+            Case "Huge"
+                BackBuffer = New Bitmap(768, 768)
+            Case "XXL"
+                BackBuffer = New Bitmap(2048, 2048)
+        End Select
+
         'complicated: GFX is a graphics class originating on the backbuffer bitmap instead of the actual
         'surface of the control. We draw objects in GFX, which correlates to the BackBuffer variable
         'When it comes time to render, BackBuffer is then drawn to the form. This prevents flickering.
         GFX = Graphics.FromImage(BackBuffer)
         terraintype(0) = Nothing
         'initialize terraintype array to contain any images found inside the /terrain directory
-        For Each foundFile As String In My.Computer.FileSystem.GetFiles("graphics/terrain", FileIO.SearchOption.SearchAllSubDirectories)
-            ReDim Preserve terraintype(terraintype.Length)
-            terraintype(terraintype.Length - 1) = Image.FromFile(foundFile)
-        Next
+        Try
+            For Each foundFile As String In My.Computer.FileSystem.GetFiles("graphics/terrain", FileIO.SearchOption.SearchAllSubDirectories)
+                ReDim Preserve terraintype(terraintype.Length)
+                terraintype(terraintype.Length - 1) = Image.FromFile(foundFile)
+                terraintype(terraintype.Length - 1).Tag = foundFile
+            Next
+        Catch ex As Exception
+
+        End Try
+       
         canvasX = (LEVELSCROLL * -1) - 1
         canvasY = (LEVELSCROLL * -1) - 1
         cursorPainter = Nothing
@@ -32,9 +49,9 @@
         Dim horizontal As Point
     End Structure
     Const LEVELSCROLL As Integer = 4
-    Dim brushes(-1) As PictureBox
-    Public cursorPainter As Image
+    Private cursorPainter As Image
     Dim terrainFile As String
+    Dim levelSize As String
     Dim currentTerrain() As String 'array to contain terrain objects
     Dim canvasbounds As Rectangle
     Dim levelBounds As levelBnd
@@ -96,19 +113,20 @@
                         Case Is = 1
                             'MsgBox("terrainblock " & tile & " of line " & line & " is 1. setting to grass")
                             Dim tblock As New terrain(GFX, terraintype(1), tile * 32, line * 32)
-                            'Call tblock.entityPlace()
+                            tblock.staticSprite.Tag = terraintype(1).Tag
                             ReDim Preserve ground(ground.Length)
                             ground(ground.Length - 1) = tblock
+                            ground(ground.Length - 1).staticSprite.Tag = terraintype(1).Tag
                         Case Is = 2
                             'MsgBox("terrainblock " & tile & " of line " & line & " is 2. setting to gravel")
                             Dim tblock As New terrain(GFX, terraintype(2), tile * 32, line * 32)
-                            'Call tblock.entityPlace()
+                            tblock.staticSprite.Tag = terraintype(2).Tag
                             ReDim Preserve ground(ground.Length)
                             ground(ground.Length - 1) = tblock
                         Case Is = 3
                             'MsgBox("terrainblock " & tile & " of line " & line & " is 3. setting to water")
                             Dim tblock As New terrain(GFX, terraintype(3), tile * 32, line * 32)
-                            'Call tblock.entityPlace()
+                            tblock.staticSprite.Tag = terraintype(3).Tag
                             ReDim Preserve ground(ground.Length)
                             ground(ground.Length - 1) = tblock
                         Case Else
@@ -227,9 +245,39 @@
             brushGUI.Location = New Point(10, grpBrushLoc)
             grpBrushLoc += 65
         Next
+        Return 0
     End Function
     Private Sub selectBrush(sender, e)
         Dim item As PictureBox = sender
         cursorPainter = item.Image
+    End Sub
+    Private Sub writeToFile(sender As Object, e As System.EventArgs) Handles SaveToolStripMenuItem.Click
+        FileOpen(1, terrainFile, OpenMode.Output)
+        Dim writeFactor As Integer = 0
+        Dim conjunctString As String = ""
+        Select Case levelSize
+            Case "Tiny"
+                writeFactor = 8
+            Case "Large"
+                writeFactor = 16
+            Case "Huge"
+                writeFactor = 24
+            Case "XXL"
+                writeFactor = 64
+        End Select
+        Dim lineLength As Integer = 0
+        For Each tile As terrain In ground
+            lineLength += 1
+            For Brush As Integer = 1 To terraintype.Length - 1
+                If tile.staticSprite.Tag = terraintype(Brush).Tag Then
+                    If lineLength = writeFactor Then
+                        Write(1, Brush & "," & vbNewLine)
+                        lineLength = 0
+                    Else
+                        Write(1, Brush)
+                    End If
+                End If
+            Next
+        Next
     End Sub
 End Class

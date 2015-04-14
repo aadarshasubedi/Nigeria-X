@@ -9,10 +9,10 @@ Public Class Nigerian
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        DoubleBuffered = True
+        'DoubleBuffered = True
         SetStyle(ControlStyles.UserPaint, True)
         Me.KeyPreview = True    'enable keypress event handlers
-        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+        'SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         'set backbuffer bitmap to be the size of containing label
         BackBuffer = New Bitmap(level.Width, level.Height)
         'complicated: GFX is a graphics class originating on the backbuffer bitmap instead of the actual
@@ -21,10 +21,15 @@ Public Class Nigerian
         GFX = Graphics.FromImage(BackBuffer)
         terraintype(0) = Nothing
         'initialize terraintype array to contain any images found inside the /terrain directory
-        For Each foundFile As String In My.Computer.FileSystem.GetFiles("graphics/terrain", FileIO.SearchOption.SearchAllSubDirectories)
-            ReDim Preserve terraintype(terraintype.Length)
-            terraintype(terraintype.Length - 1) = Image.FromFile(foundFile)
-        Next
+        Try
+            For Each foundFile As String In My.Computer.FileSystem.GetFiles("graphics/terrain", FileIO.SearchOption.SearchTopLevelOnly)
+                ReDim Preserve terraintype(terraintype.Length)
+                terraintype(terraintype.Length - 1) = Image.FromFile(foundFile)
+            Next
+        Catch ex As Exception
+            MsgBox("Low on memory!")
+        End Try
+        
         canvasX = (LEVELSCROLL * -1) - 1
         canvasY = (LEVELSCROLL * -1) - 1
         Call buildTerrain(currentTerrain)
@@ -51,7 +56,7 @@ Public Class Nigerian
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles ExitToolStripMenuItem.Click
         Me.Dispose()
     End Sub
-    Sub updatelevelBounds()
+    Private Sub updatelevelBounds()
         With levelBounds
             .horizontal = New Point(canvasX + BackBuffer.Width, 0)
             .vertical = New Point(0, canvasY + BackBuffer.Height)
@@ -70,7 +75,7 @@ Public Class Nigerian
 
     End Sub
 
-    Public Sub global_ticking(sender As Object, e As System.EventArgs) Handles globalTime.Tick
+    Private Sub global_ticking(sender As Object, e As System.EventArgs) Handles globalTime.Tick
         Me.DoubleBuffered = True
         Dim ourCanvas As Graphics = lblCanvas.CreateGraphics
         ticks += 1

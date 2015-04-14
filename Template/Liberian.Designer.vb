@@ -30,6 +30,7 @@ Partial Class Liberian
         Me.globalTime = New System.Windows.Forms.Timer(Me.components)
         Me.grpBrushes = New System.Windows.Forms.GroupBox()
         Me.grpBrushVScroll = New System.Windows.Forms.VScrollBar()
+        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.grpBrushes.SuspendLayout()
         Me.SuspendLayout()
@@ -53,7 +54,7 @@ Partial Class Liberian
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
@@ -61,7 +62,7 @@ Partial Class Liberian
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'globalTime
@@ -88,6 +89,12 @@ Partial Class Liberian
         Me.grpBrushVScroll.Size = New System.Drawing.Size(17, 205)
         Me.grpBrushVScroll.TabIndex = 3
         '
+        'SaveToolStripMenuItem
+        '
+        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SaveToolStripMenuItem.Text = "Save"
+        '
         'Liberian
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -113,4 +120,5 @@ Partial Class Liberian
     Friend WithEvents globalTime As System.Windows.Forms.Timer
     Friend WithEvents grpBrushes As System.Windows.Forms.GroupBox
     Friend WithEvents grpBrushVScroll As System.Windows.Forms.VScrollBar
+    Friend WithEvents SaveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class
