@@ -32,3 +32,15 @@ C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Debug\Nigeri
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Debug\Nigerian.vbproj.GenerateResource.Cache
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\bin\Debug\Nigerian.pdb
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\bin\Debug\Nigerian.xml
+H:\Nigeria-X-master\Template\bin\Debug\Nigerian.exe
+H:\Nigeria-X-master\Template\bin\Debug\Nigerian.pdb
+H:\Nigeria-X-master\Template\bin\Debug\Nigerian.xml
+H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.Liberian.resources
+H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.LiberianInit.resources
+H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.frmMainMenu.resources
+H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.Nigerian.resources
+H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.Resources.resources
+H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.vbproj.GenerateResource.Cache
+H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.exe
+H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.xml
+H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.pdb

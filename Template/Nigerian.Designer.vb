@@ -74,7 +74,6 @@ Partial Class Nigerian
         '
         'globalTime
         '
-        Me.globalTime.Enabled = True
         Me.globalTime.Interval = 45
         '
         'Nigerian

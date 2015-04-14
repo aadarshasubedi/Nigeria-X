@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="entity.vb" />
+    <Compile Include="landscape.vb" />
     <Compile Include="Liberian.Designer.vb">
       <DependentUpon>Liberian.vb</DependentUpon>
     </Compile>

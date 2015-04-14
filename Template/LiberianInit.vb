@@ -38,7 +38,7 @@
 
     Private Sub btnGo_Click(sender As Object, e As System.EventArgs) Handles btnGo.Click
         If creationType = "load" Then
-            Dim editorWindow As New Liberian("levels/" & cobLoadName.SelectedItem, "Large") 'replace with appropriate method to find size//
+            Dim editorWindow As New Liberian("levels/" & cobLoadName.SelectedItem, "normal", "Large") 'replace with appropriate method to find size//
             editorWindow.Enabled = True
             editorWindow.Visible = True
             editorWindow.Activate()

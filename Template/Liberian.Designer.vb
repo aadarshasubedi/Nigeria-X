@@ -26,11 +26,11 @@ Partial Class Liberian
         Me.lblCanvas = New System.Windows.Forms.Label()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.globalTime = New System.Windows.Forms.Timer(Me.components)
         Me.grpBrushes = New System.Windows.Forms.GroupBox()
         Me.grpBrushVScroll = New System.Windows.Forms.VScrollBar()
-        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.grpBrushes.SuspendLayout()
         Me.SuspendLayout()
@@ -59,15 +59,20 @@ Partial Class Liberian
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "File"
         '
+        'SaveToolStripMenuItem
+        '
+        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
+        Me.SaveToolStripMenuItem.Text = "Save"
+        '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'globalTime
         '
-        Me.globalTime.Enabled = True
         Me.globalTime.Interval = 45
         '
         'grpBrushes
@@ -88,12 +93,6 @@ Partial Class Liberian
         Me.grpBrushVScroll.Name = "grpBrushVScroll"
         Me.grpBrushVScroll.Size = New System.Drawing.Size(17, 205)
         Me.grpBrushVScroll.TabIndex = 3
-        '
-        'SaveToolStripMenuItem
-        '
-        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.SaveToolStripMenuItem.Text = "Save"
         '
         'Liberian
         '

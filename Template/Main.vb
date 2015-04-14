@@ -4,7 +4,7 @@
         Dim selectedObject As Button = sender
         Select Case selectedObject.Tag
             Case 1
-                Dim newWindow As New Nigerian
+                Dim newWindow As New Nigerian("levels/terrain2.lvl", "normal", "Large")
                 'newWindow.Name = "Game"
                 phoenixifyMenu(newWindow)
             Case 2

@@ -3,36 +3,40 @@
 '
 '
 Public Class Nigerian
-    Sub New()
+    Sub New(passedterrainfile As String, passedEnv As String, size As String)
 
         ' This call is required by the designer.
         InitializeComponent()
-
         ' Add any initialization after the InitializeComponent() call.
-        'DoubleBuffered = True
+        DoubleBuffered = True
         SetStyle(ControlStyles.UserPaint, True)
+        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         Me.KeyPreview = True    'enable keypress event handlers
-        'SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+
+        terrainFile = passedterrainfile
         'set backbuffer bitmap to be the size of containing label
-        BackBuffer = New Bitmap(level.Width, level.Height)
+        levelSize = size
+        Select Case levelSize
+            Case "Tiny"
+                BackBuffer = New Bitmap(256, 256)
+            Case "Large"
+                BackBuffer = New Bitmap(512, 512)
+            Case "Huge"
+                BackBuffer = New Bitmap(768, 768)
+            Case "XXL"
+                BackBuffer = New Bitmap(2048, 2048)
+        End Select
+
         'complicated: GFX is a graphics class originating on the backbuffer bitmap instead of the actual
         'surface of the control. We draw objects in GFX, which correlates to the BackBuffer variable
         'When it comes time to render, BackBuffer is then drawn to the form. This prevents flickering.
         GFX = Graphics.FromImage(BackBuffer)
-        terraintype(0) = Nothing
-        'initialize terraintype array to contain any images found inside the /terrain directory
-        Try
-            For Each foundFile As String In My.Computer.FileSystem.GetFiles("graphics/terrain", FileIO.SearchOption.SearchTopLevelOnly)
-                ReDim Preserve terraintype(terraintype.Length)
-                terraintype(terraintype.Length - 1) = Image.FromFile(foundFile)
-            Next
-        Catch ex As Exception
-            MsgBox("Low on memory!")
-        End Try
-        
+
         canvasX = (LEVELSCROLL * -1) - 1
         canvasY = (LEVELSCROLL * -1) - 1
-        Call buildTerrain(currentTerrain)
+
+        ground = New landscape(GFX, passedterrainfile, passedEnv)
+        globalTime.Enabled = True
     End Sub
     Structure levelBnd
         Dim vertical As Point
@@ -40,16 +44,16 @@ Public Class Nigerian
     End Structure
     Const LEVELSCROLL As Integer = 4
     Dim currentTerrain() As String 'array to contain terrain objects
-    Dim levelTerraFile As String = "terraintest.lvl"    'pending string for lvl file reference on initialization
+    Dim terrainFile As String = Nothing   'pending string for lvl file reference on initialization
+    Dim levelSize As String = Nothing
     Dim canvasbounds As Rectangle
     Dim levelBounds As levelBnd
-    Dim terraintype(0) As Image 'containing array for terrain types in /graphics/terrain directory
     Dim ticks As Integer 'ticks passed; used to keep track of useful stuff
     Dim canvasX, canvasY As Integer
     Dim canvasRight, canvasLeft, canvasUp, canvasDown As Boolean
     Dim level As Image = My.Resources.back2 'overall level background behind terrain objects
     Dim enemies(-1) As entity
-    Dim ground(-1) As terrain
+    Dim ground As landscape
     Dim BackBuffer As Bitmap 'collector bitmap as described above
     Public GFX As Graphics  'described in new constructor
 
@@ -83,9 +87,7 @@ Public Class Nigerian
         GFX.DrawImage(level, 0, 0)
         'call the Place method of all objects intended to be visible to ensure that they show up
         'on this refresh
-        For Each tile As terrain In ground
-            tile.entityPlace()
-        Next
+        ground.DrawMe()
         For Each thing As entity In enemies
             thing.entityPlace()
             thing.entityMovement()
@@ -99,46 +101,6 @@ Public Class Nigerian
     Private Sub Nigerian_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
         frmMainMenu.wakeMenu()
     End Sub
-    Function buildTerrain(ByVal terrainArray() As String)
-        Static opened As Boolean = False
-        If opened Then
-        Else
-            Dim terrainString As String = My.Computer.FileSystem.ReadAllText(levelTerraFile)
-            MsgBox("the total terrain file is " & terrainString)
-            terrainArray = Split(terrainString, ",")  'replace with terrainarray when possible
-            For line As Integer = 0 To 2
-                terrainArray(line) = Val(terrainArray(line)) 'the I/O method we use includes enters; must use Val to make pure num strings
-                'MsgBox("We are currently on line " & line & " which is: " & terrainArray(line))
-                For tile As Integer = 0 To terrainArray(line).Length - 1
-                    'MsgBox("We are currently on tile " & tile & " of line " & line)
-                    Select Case terrainArray(line).Substring(tile, 1)
-                        Case Is = 1
-                            'MsgBox("terrainblock " & tile & " of line " & line & " is 1. setting to grass")
-                            Dim tblock As New terrain(GFX, terraintype(1), tile * 32, line * 32)
-                            'Call tblock.entityPlace()
-                            ReDim Preserve ground(ground.Length)
-                            ground(ground.Length - 1) = tblock
-                        Case Is = 2
-                            'MsgBox("terrainblock " & tile & " of line " & line & " is 2. setting to gravel")
-                            Dim tblock As New terrain(GFX, terraintype(2), tile * 32, line * 32)
-                            'Call tblock.entityPlace()
-                            ReDim Preserve ground(ground.Length)
-                            ground(ground.Length - 1) = tblock
-                        Case Is = 3
-                            'MsgBox("terrainblock " & tile & " of line " & line & " is 3. setting to water")
-                            Dim tblock As New terrain(GFX, terraintype(3), tile * 32, line * 32)
-                            'Call tblock.entityPlace()
-                            ReDim Preserve ground(ground.Length)
-                            ground(ground.Length - 1) = tblock
-                        Case Else
-                            MsgBox("we are missing something")
-                    End Select
-                Next
-            Next
-            opened = True
-        End If
-        Return 0
-    End Function
     Private Sub moveView()
         'this is called every tick/refresh to check if the scroll is moving and also constrain it
         'via canvasX/canvasY variables and the points contained in lblBND structure levelbounds

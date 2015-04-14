@@ -1,14 +1,15 @@
 ﻿Public Class Liberian
-    Sub New(passedterrainfile As String, size As String)
+    Sub New(passedterrainfile As String, passedEnv As String, size As String)
 
         ' This call is required by the designer.
         InitializeComponent()
-        terrainFile = passedterrainfile
         ' Add any initialization after the InitializeComponent() call.
         DoubleBuffered = True
         SetStyle(ControlStyles.UserPaint, True)
-        Me.KeyPreview = True    'enable keypress event handlers
         SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+        Me.KeyPreview = True    'enable keypress event handlers
+
+        terrainFile = passedterrainfile
         'set backbuffer bitmap to be the size of containing label
         levelSize = size
         Select Case levelSize
@@ -26,42 +27,31 @@
         'surface of the control. We draw objects in GFX, which correlates to the BackBuffer variable
         'When it comes time to render, BackBuffer is then drawn to the form. This prevents flickering.
         GFX = Graphics.FromImage(BackBuffer)
-        terraintype(0) = Nothing
-        'initialize terraintype array to contain any images found inside the /terrain directory
-        Try
-            For Each foundFile As String In My.Computer.FileSystem.GetFiles("graphics/terrain", FileIO.SearchOption.SearchAllSubDirectories)
-                ReDim Preserve terraintype(terraintype.Length)
-                terraintype(terraintype.Length - 1) = Image.FromFile(foundFile)
-                terraintype(terraintype.Length - 1).Tag = foundFile
-            Next
-        Catch ex As Exception
 
-        End Try
-       
         canvasX = (LEVELSCROLL * -1) - 1
         canvasY = (LEVELSCROLL * -1) - 1
-        cursorPainter = Nothing
+
+        ground = New landscape(GFX, passedterrainfile, passedEnv)
         populateBrushes()
-        Call buildTerrain(currentTerrain)
+        globalTime.Enabled = True
     End Sub
     Structure levelBnd
         Dim vertical As Point
         Dim horizontal As Point
     End Structure
     Const LEVELSCROLL As Integer = 4
-    Private cursorPainter As Image
+    Private cursorPainter As Image = Nothing
     Dim terrainFile As String
+    Dim ground As landscape
     Dim levelSize As String
-    Dim currentTerrain() As String 'array to contain terrain objects
     Dim canvasbounds As Rectangle
     Dim levelBounds As levelBnd
-    Dim terraintype(0) As Image 'containing array for terrain types in /graphics/terrain directory
+    'Dim terraintype(0) As Image 'containing array for terrain types in /graphics/terrain directory
     Dim ticks As Integer 'ticks passed; used to keep track of useful stuff
     Dim canvasX, canvasY As Integer
     Dim canvasRight, canvasLeft, canvasUp, canvasDown As Boolean
     Dim level As Image = My.Resources.back2 'overall level background behind terrain objects
     Dim enemies(-1) As entity
-    Dim ground(-1) As terrain
     Dim BackBuffer As Bitmap 'collector bitmap as described above
     Public GFX As Graphics  'described in new constructor
 
@@ -82,9 +72,7 @@
         GFX.DrawImage(level, 0, 0)
         'call the Place method of all objects intended to be visible to ensure that they show up
         'on this refresh
-        For Each tile As terrain In ground
-            tile.entityPlace()
-        Next
+        ground.DrawMe()
         For Each thing As entity In enemies
             thing.entityPlace()
         Next
@@ -97,47 +85,6 @@
     Private Sub Liberian_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
         frmMainMenu.wakeMenu()
     End Sub
-    Function buildTerrain(ByVal terrainArray() As String)
-        Static opened As Boolean = False
-        If opened Then
-        Else
-            Dim terrainString As String = My.Computer.FileSystem.ReadAllText(terrainFile)
-            MsgBox("the total terrain file is " & terrainString)
-            terrainArray = Split(terrainString, ",")  'replace with terrainarray when possible
-            For line As Integer = 0 To 2
-                terrainArray(line) = Val(terrainArray(line)) 'the I/O method we use includes enters; must use Val to make pure num strings
-                'MsgBox("We are currently on line " & line & " which is: " & terrainArray(line))
-                For tile As Integer = 0 To terrainArray(line).Length - 1
-                    'MsgBox("We are currently on tile " & tile & " of line " & line)
-                    Select Case terrainArray(line).Substring(tile, 1)
-                        Case Is = 1
-                            'MsgBox("terrainblock " & tile & " of line " & line & " is 1. setting to grass")
-                            Dim tblock As New terrain(GFX, terraintype(1), tile * 32, line * 32)
-                            tblock.staticSprite.Tag = terraintype(1).Tag
-                            ReDim Preserve ground(ground.Length)
-                            ground(ground.Length - 1) = tblock
-                            ground(ground.Length - 1).staticSprite.Tag = terraintype(1).Tag
-                        Case Is = 2
-                            'MsgBox("terrainblock " & tile & " of line " & line & " is 2. setting to gravel")
-                            Dim tblock As New terrain(GFX, terraintype(2), tile * 32, line * 32)
-                            tblock.staticSprite.Tag = terraintype(2).Tag
-                            ReDim Preserve ground(ground.Length)
-                            ground(ground.Length - 1) = tblock
-                        Case Is = 3
-                            'MsgBox("terrainblock " & tile & " of line " & line & " is 3. setting to water")
-                            Dim tblock As New terrain(GFX, terraintype(3), tile * 32, line * 32)
-                            tblock.staticSprite.Tag = terraintype(3).Tag
-                            ReDim Preserve ground(ground.Length)
-                            ground(ground.Length - 1) = tblock
-                        Case Else
-                            MsgBox("we are missing something")
-                    End Select
-                Next
-            Next
-            opened = True
-        End If
-        Return 0
-    End Function
     Private Sub moveView()
         'this is called every tick/refresh to check if the scroll is moving and also constrain it
         'via canvasX/canvasY variables and the points contained in lblBND structure levelbounds
@@ -217,12 +164,12 @@
         'if mouse is clicked on canvas, check each member of ground array for intersections. If so, set affected tile image to that
         'provided by cursorpainter variable
         Dim location As Integer = -1
-        For Each tile As terrain In ground
+        For Each tile As terrain In ground.groundObjects
             'location is used to figure out which member of ground array to modify based on the for.. parse
             location += 1
             If tile.boundaries.IntersectsWith(New Rectangle(e.Location, New Size(1, 1))) Then
                 Try
-                    ground(location) = New terrain(GFX, cursorPainter, tile.locationX, tile.locationY)
+                    ground.groundObjects(location) = New terrain(GFX, cursorPainter, tile.locationX, tile.locationY)
                 Catch ex As Exception
                     MsgBox("No brush selected!")
                 End Try
@@ -233,10 +180,10 @@
         'this attempts to pull members of the terraintype array, redeclare them as pictureboxes, and plop them into the brushes groupbox
         'additionally an event handler is added for click to each to set cursorPainter to their corresponding texture
         Dim grpBrushLoc As Integer = 25
-        For tblock As Integer = 1 To terraintype.Length - 1
+        For tblock As Integer = 0 To ground.brushes.Length - 1
             Dim brushGUI As New PictureBox
             With brushGUI
-                .Image = terraintype(tblock)
+                .Image = ground.brushes(tblock)
                 .SizeMode = PictureBoxSizeMode.StretchImage
                 .Size = New Size(64, 64)
                 .Parent = grpBrushes
@@ -266,10 +213,10 @@
                 writeFactor = 64
         End Select
         Dim lineLength As Integer = 0
-        For Each tile As terrain In ground
+        For Each tile As terrain In ground.groundObjects
             lineLength += 1
-            For Brush As Integer = 1 To terraintype.Length - 1
-                If tile.staticSprite.Tag = terraintype(Brush).Tag Then
+            For Brush As Integer = 1 To ground.brushes.Length - 1
+                If tile.staticSprite.Tag = ground.brushes(Brush).Tag Then
                     If lineLength = writeFactor Then
                         Write(1, Brush & "," & vbNewLine)
                         lineLength = 0
