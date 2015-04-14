@@ -23,6 +23,8 @@
         Next
         canvasX = (LEVELSCROLL * -1) - 1
         canvasY = (LEVELSCROLL * -1) - 1
+        cursorPainter = Nothing
+        populateBrushes()
         Call buildTerrain(currentTerrain)
     End Sub
     Structure levelBnd
@@ -30,6 +32,8 @@
         Dim horizontal As Point
     End Structure
     Const LEVELSCROLL As Integer = 4
+    Dim brushes(-1) As PictureBox
+    Public cursorPainter As Image
     Dim terrainFile As String
     Dim currentTerrain() As String 'array to contain terrain objects
     Dim canvasbounds As Rectangle
@@ -61,12 +65,11 @@
         GFX.DrawImage(level, 0, 0)
         'call the Place method of all objects intended to be visible to ensure that they show up
         'on this refresh
-        For Each tile As entity In ground
+        For Each tile As terrain In ground
             tile.entityPlace()
         Next
         For Each thing As entity In enemies
             thing.entityPlace()
-            thing.entityMovement()
         Next
         updatelevelBounds()
         moveView()
@@ -74,7 +77,7 @@
         ourCanvas.DrawImage(BackBuffer, canvasX, canvasY)
     End Sub
 
-    Private Sub Nigerian_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+    Private Sub Liberian_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
         frmMainMenu.wakeMenu()
     End Sub
     Function buildTerrain(ByVal terrainArray() As String)
@@ -191,4 +194,42 @@
         End If
 
     End Function
+    
+    Private Sub lblCanvas_MouseDown(sender As Object, e As MouseEventArgs) Handles lblCanvas.MouseDown
+        'if mouse is clicked on canvas, check each member of ground array for intersections. If so, set affected tile image to that
+        'provided by cursorpainter variable
+        Dim location As Integer = -1
+        For Each tile As terrain In ground
+            'location is used to figure out which member of ground array to modify based on the for.. parse
+            location += 1
+            If tile.boundaries.IntersectsWith(New Rectangle(e.Location, New Size(1, 1))) Then
+                Try
+                    ground(location) = New terrain(GFX, cursorPainter, tile.locationX, tile.locationY)
+                Catch ex As Exception
+                    MsgBox("No brush selected!")
+                End Try
+            End If
+        Next tile
+    End Sub
+    Private Function populateBrushes()
+        'this attempts to pull members of the terraintype array, redeclare them as pictureboxes, and plop them into the brushes groupbox
+        'additionally an event handler is added for click to each to set cursorPainter to their corresponding texture
+        Dim grpBrushLoc As Integer = 25
+        For tblock As Integer = 1 To terraintype.Length - 1
+            Dim brushGUI As New PictureBox
+            With brushGUI
+                .Image = terraintype(tblock)
+                .SizeMode = PictureBoxSizeMode.StretchImage
+                .Size = New Size(64, 64)
+                .Parent = grpBrushes
+            End With
+            AddHandler brushGUI.Click, AddressOf selectBrush
+            brushGUI.Location = New Point(10, grpBrushLoc)
+            grpBrushLoc += 65
+        Next
+    End Function
+    Private Sub selectBrush(sender, e)
+        Dim item As PictureBox = sender
+        cursorPainter = item.Image
+    End Sub
 End Class

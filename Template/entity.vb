@@ -245,4 +245,20 @@
             moving = value
         End Set
     End Property
+    Property boundaries As Rectangle
+        Get
+            Return bounds
+        End Get
+        Set(value As Rectangle)
+            bounds = value
+        End Set
+    End Property
+    Property staticSprite As Image
+        Get
+            Return visObject.current
+        End Get
+        Set(value As Image)
+            visObject.current = value
+        End Set
+    End Property
 End Class

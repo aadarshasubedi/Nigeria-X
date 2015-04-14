@@ -16,10 +16,10 @@
     Private Sub levelOptSelect(sender As System.Object, e As System.EventArgs) Handles radNewLevel.Click, radLoadLevel.Click
         If radLoadLevel.Checked = False Then
             makeUseable(grpNewCanvas, grpLoadCanvas)
-            creationType = "load"
+            creationType = "new"
         ElseIf radNewLevel.Checked = False Then
             makeUseable(grpLoadCanvas, grpNewCanvas)
-            creationType = "new"
+            creationType = "load"
         End If
     End Sub
     Function makeUseable(ByRef formFriend As Control, ByRef formEnemy As Control)
@@ -42,6 +42,9 @@
             editorWindow.Enabled = True
             editorWindow.Visible = True
             editorWindow.Activate()
+            Me.Visible = False
+        ElseIf creationType = "new" Then
+
         End If
     End Sub
 

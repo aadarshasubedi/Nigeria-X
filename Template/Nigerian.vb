@@ -78,7 +78,7 @@ Public Class Nigerian
         GFX.DrawImage(level, 0, 0)
         'call the Place method of all objects intended to be visible to ensure that they show up
         'on this refresh
-        For Each tile As entity In ground
+        For Each tile As terrain In ground
             tile.entityPlace()
         Next
         For Each thing As entity In enemies
