@@ -170,8 +170,6 @@
             For Each tile As terrain In ground.groundObjects
                 'location is used to figure out which member of ground array to modify based on the for.. parse
                 location += 1
-                'adding canvas x and y helps offset the cursor to where the position is actually rendering on the backbuffer bitmap
-                'in lieu of true raycasting
                 If tile.boundaries.IntersectsWith(New Rectangle(New Point(e.X - canvasX, e.Y - canvasY), New Size(1, 1))) Then
                     Dim tblock As New terrain(GFX, cursorPainter, tile.locationX, tile.locationY)
                     tblock.staticSprite.Tag = cursorPainter.Tag
@@ -217,14 +215,16 @@
             Case "XXL"
                 writeFactor = 64
         End Select
-        Dim lineLength As Integer = -1
+        Dim lineLength As Integer = 0
         For Each tile As terrain In ground.groundObjects
+            'For currentTile As Integer = 0 To ground.groundObjects.Length - 1
             lineLength += 1
             For Brush As Integer = 0 To ground.brushes.Length - 1
                 If tile.staticSprite.Tag = ground.brushes(Brush).Tag Then
+                    'If ground.groundObjects(currentTile).staticSprite.Tag = ground.brushes(Brush).Tag Then
                     If lineLength = (writeFactor - 1) Then
                         conjunctString &= (Brush & "," & vbNewLine)
-                        lineLength = -1
+                        lineLength = 0
                     Else
                         conjunctString &= Brush
                     End If
