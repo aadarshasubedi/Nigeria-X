@@ -166,29 +166,31 @@
             pcanvas.DrawImage(visObject.current, locObject)
         End If
     End Sub
-    'Function calcCollision(ByVal objects() As entity)
-    'For Each member As entity In objects
-    ' If member.shouldCollide = True Then
-    ' Dim memberestColl As Rectangle = member.boundaries
-    'memberestColl.Inflate(member.MoveSpeed, member.MoveSpeed)
-    'If Me.boundaries.IntersectsWith(memberestColl) Then
-    ' member.move = False
-    'End If
-    'End If
-    'Next
-    'End Function
+    Function calcCollision(ByVal objects() As entity)
+        For Each member As entity In objects
+            If Me.shouldCollide And member.shouldCollide Then
+                Dim memberestColl As Rectangle = member.boundaries
+                memberestColl.Inflate(member.MoveSpeed, member.MoveSpeed)
+                If Me.boundaries.IntersectsWith(memberestColl) Then
+                    member.moveDir = "S"
+                    member.move = False
+                End If
+            End If
+        Next
+    End Function
     Sub entityMovement()
-        moving = True
-        Select Case moveDir
-            Case "N"
-                locObject.Y -= moveRate
-            Case "E"
-                locObject.X += moveRate
-            Case "S"
-                locObject.Y += moveRate
-            Case "W"
-                locObject.X -= moveRate
-        End Select
+        If moving = True Then
+            Select Case moveDir
+                Case "N"
+                    locObject.Y -= moveRate
+                Case "E"
+                    locObject.X += moveRate
+                Case "S"
+                    locObject.Y += moveRate
+                Case "W"
+                    locObject.X -= moveRate
+            End Select
+        End If
         Call entityPlace()
     End Sub
     Sub Dispose()
@@ -207,6 +209,7 @@
             Case "W"
                 target.current = target.W
         End Select
+        visObject.current.MakeTransparent(Color.White)
         Return 0
     End Function
 

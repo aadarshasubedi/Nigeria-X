@@ -70,6 +70,7 @@ Public Class Nigerian
     Private Sub Button1_Click(sender As Object, e As System.EventArgs) Handles Button1.Click
         Dim mainCanvas As Graphics = lblCanvas.CreateGraphics
         Dim enemy As New entity(GFX, "test", 42, 32)
+        enemy.shouldCollide = True
         enemy.moveDirection = "E"
         enemy.MoveSpeed = 3
         enemy.move = True
@@ -88,11 +89,11 @@ Public Class Nigerian
         'call the Place method of all objects intended to be visible to ensure that they show up
         'on this refresh
         ground.DrawMe()
-        'For Each block As terrain In ground.groundObjects
-        'block.calcCollision(enemies)
-        'Next
+        For Each block As terrain In ground.groundObjects
+            block.calcCollision(enemies)
+        Next
         For Each thing As entity In enemies
-            'thing.calcCollision(enemies)
+            thing.calcCollision(ground.groundObjects)
             thing.entityPlace()
             thing.entityMovement()
         Next

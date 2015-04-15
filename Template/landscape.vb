@@ -31,6 +31,9 @@
     Function DrawMe()
         For Each tile As terrain In groundObjects
             tile.entityPlace()
+            If tile.staticSprite.Tag = terrainBrush(2).Tag Then
+                tile.shouldCollide = True
+            End If
         Next
     End Function
     Sub buildTerrain(ByVal terrainArray() As String)
