@@ -7,6 +7,7 @@
     Private moveDir As Char = "N"
     Private moving As Boolean
     'bounds used for collision etc
+    Private collide As Boolean = False
     Private bounds As New Rectangle
     'the graphics class to draw to
     Public pcanvas As Graphics
@@ -165,7 +166,17 @@
             pcanvas.DrawImage(visObject.current, locObject)
         End If
     End Sub
-
+    Function calcCollision(ByVal objects() As entity)
+        For Each member As entity In objects
+            If member.shouldCollide = True Then
+                Dim memberestColl As Rectangle = member.boundaries
+                memberestColl.Inflate(member.MoveSpeed, member.MoveSpeed)
+                If Me.boundaries.IntersectsWith(memberestColl) Then
+                    member.move = False
+                End If
+            End If
+        Next
+    End Function
     Sub entityMovement()
         moving = True
         Select Case moveDir
@@ -179,6 +190,9 @@
                 locObject.X -= moveRate
         End Select
         Call entityPlace()
+    End Sub
+    Sub Dispose()
+        Me.Dispose()
     End Sub
 
     Private Function spriteDir(ByRef target As sprite)
@@ -259,6 +273,14 @@
         End Get
         Set(value As Image)
             visObject.current = value
+        End Set
+    End Property
+    Property shouldCollide As Boolean
+        Get
+            Return collide
+        End Get
+        Set(value As Boolean)
+            collide = value
         End Set
     End Property
 End Class

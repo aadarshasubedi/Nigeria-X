@@ -26,17 +26,17 @@ Partial Class LiberianInit
         Me.radLoadLevel = New System.Windows.Forms.RadioButton()
         Me.radNewLevel = New System.Windows.Forms.RadioButton()
         Me.grpNewCanvas = New System.Windows.Forms.GroupBox()
-        Me.grpLoadCanvas = New System.Windows.Forms.GroupBox()
-        Me.cobModEnv = New System.Windows.Forms.ComboBox()
-        Me.lblModEnvPrompt = New System.Windows.Forms.Label()
-        Me.cobLoadName = New System.Windows.Forms.ComboBox()
-        Me.lblLoadNamePrompt = New System.Windows.Forms.Label()
         Me.cobEnvironment = New System.Windows.Forms.ComboBox()
         Me.lblEnvironmentPrompt = New System.Windows.Forms.Label()
         Me.lblCanvasSizePrompt = New System.Windows.Forms.Label()
         Me.cobSize = New System.Windows.Forms.ComboBox()
         Me.lblCanvasNamePrompt = New System.Windows.Forms.Label()
         Me.txtName = New System.Windows.Forms.TextBox()
+        Me.grpLoadCanvas = New System.Windows.Forms.GroupBox()
+        Me.cobModEnv = New System.Windows.Forms.ComboBox()
+        Me.lblModEnvPrompt = New System.Windows.Forms.Label()
+        Me.cobLoadName = New System.Windows.Forms.ComboBox()
+        Me.lblLoadNamePrompt = New System.Windows.Forms.Label()
         Me.btnGo = New System.Windows.Forms.Button()
         Me.grpLoadorNew.SuspendLayout()
         Me.grpNewCanvas.SuspendLayout()
@@ -93,61 +93,10 @@ Partial Class LiberianInit
         Me.grpNewCanvas.Text = "New Canvas"
         Me.grpNewCanvas.Visible = False
         '
-        'grpLoadCanvas
-        '
-        Me.grpLoadCanvas.Controls.Add(Me.cobModEnv)
-        Me.grpLoadCanvas.Controls.Add(Me.lblModEnvPrompt)
-        Me.grpLoadCanvas.Controls.Add(Me.cobLoadName)
-        Me.grpLoadCanvas.Controls.Add(Me.lblLoadNamePrompt)
-        Me.grpLoadCanvas.Location = New System.Drawing.Point(115, 12)
-        Me.grpLoadCanvas.Name = "grpLoadCanvas"
-        Me.grpLoadCanvas.Size = New System.Drawing.Size(147, 112)
-        Me.grpLoadCanvas.TabIndex = 1
-        Me.grpLoadCanvas.TabStop = False
-        Me.grpLoadCanvas.Text = "Load Canvas"
-        '
-        'cobModEnv
-        '
-        Me.cobModEnv.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cobModEnv.FormattingEnabled = True
-        Me.cobModEnv.Items.AddRange(New Object() {"Earth", "Oceanic", "Afternoon", "Hell"})
-        Me.cobModEnv.Location = New System.Drawing.Point(53, 54)
-        Me.cobModEnv.Name = "cobModEnv"
-        Me.cobModEnv.Size = New System.Drawing.Size(88, 21)
-        Me.cobModEnv.TabIndex = 5
-        '
-        'lblModEnvPrompt
-        '
-        Me.lblModEnvPrompt.AutoSize = True
-        Me.lblModEnvPrompt.Location = New System.Drawing.Point(14, 57)
-        Me.lblModEnvPrompt.Name = "lblModEnvPrompt"
-        Me.lblModEnvPrompt.Size = New System.Drawing.Size(29, 13)
-        Me.lblModEnvPrompt.TabIndex = 4
-        Me.lblModEnvPrompt.Text = "Env:"
-        '
-        'cobLoadName
-        '
-        Me.cobLoadName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cobLoadName.FormattingEnabled = True
-        Me.cobLoadName.Location = New System.Drawing.Point(53, 27)
-        Me.cobLoadName.Name = "cobLoadName"
-        Me.cobLoadName.Size = New System.Drawing.Size(88, 21)
-        Me.cobLoadName.TabIndex = 2
-        '
-        'lblLoadNamePrompt
-        '
-        Me.lblLoadNamePrompt.AutoSize = True
-        Me.lblLoadNamePrompt.Location = New System.Drawing.Point(6, 30)
-        Me.lblLoadNamePrompt.Name = "lblLoadNamePrompt"
-        Me.lblLoadNamePrompt.Size = New System.Drawing.Size(41, 13)
-        Me.lblLoadNamePrompt.TabIndex = 1
-        Me.lblLoadNamePrompt.Text = "Name: "
-        '
         'cobEnvironment
         '
         Me.cobEnvironment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cobEnvironment.FormattingEnabled = True
-        Me.cobEnvironment.Items.AddRange(New Object() {"Earth", "Oceanic", "Afternoon", "Hell"})
         Me.cobEnvironment.Location = New System.Drawing.Point(53, 81)
         Me.cobEnvironment.Name = "cobEnvironment"
         Me.cobEnvironment.Size = New System.Drawing.Size(88, 21)
@@ -196,6 +145,55 @@ Partial Class LiberianInit
         Me.txtName.Name = "txtName"
         Me.txtName.Size = New System.Drawing.Size(88, 20)
         Me.txtName.TabIndex = 0
+        '
+        'grpLoadCanvas
+        '
+        Me.grpLoadCanvas.Controls.Add(Me.cobModEnv)
+        Me.grpLoadCanvas.Controls.Add(Me.lblModEnvPrompt)
+        Me.grpLoadCanvas.Controls.Add(Me.cobLoadName)
+        Me.grpLoadCanvas.Controls.Add(Me.lblLoadNamePrompt)
+        Me.grpLoadCanvas.Location = New System.Drawing.Point(115, 12)
+        Me.grpLoadCanvas.Name = "grpLoadCanvas"
+        Me.grpLoadCanvas.Size = New System.Drawing.Size(147, 112)
+        Me.grpLoadCanvas.TabIndex = 1
+        Me.grpLoadCanvas.TabStop = False
+        Me.grpLoadCanvas.Text = "Load Canvas"
+        '
+        'cobModEnv
+        '
+        Me.cobModEnv.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cobModEnv.FormattingEnabled = True
+        Me.cobModEnv.Location = New System.Drawing.Point(53, 54)
+        Me.cobModEnv.Name = "cobModEnv"
+        Me.cobModEnv.Size = New System.Drawing.Size(88, 21)
+        Me.cobModEnv.TabIndex = 5
+        '
+        'lblModEnvPrompt
+        '
+        Me.lblModEnvPrompt.AutoSize = True
+        Me.lblModEnvPrompt.Location = New System.Drawing.Point(14, 57)
+        Me.lblModEnvPrompt.Name = "lblModEnvPrompt"
+        Me.lblModEnvPrompt.Size = New System.Drawing.Size(29, 13)
+        Me.lblModEnvPrompt.TabIndex = 4
+        Me.lblModEnvPrompt.Text = "Env:"
+        '
+        'cobLoadName
+        '
+        Me.cobLoadName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cobLoadName.FormattingEnabled = True
+        Me.cobLoadName.Location = New System.Drawing.Point(53, 27)
+        Me.cobLoadName.Name = "cobLoadName"
+        Me.cobLoadName.Size = New System.Drawing.Size(88, 21)
+        Me.cobLoadName.TabIndex = 2
+        '
+        'lblLoadNamePrompt
+        '
+        Me.lblLoadNamePrompt.AutoSize = True
+        Me.lblLoadNamePrompt.Location = New System.Drawing.Point(6, 30)
+        Me.lblLoadNamePrompt.Name = "lblLoadNamePrompt"
+        Me.lblLoadNamePrompt.Size = New System.Drawing.Size(41, 13)
+        Me.lblLoadNamePrompt.TabIndex = 1
+        Me.lblLoadNamePrompt.Text = "Name: "
         '
         'btnGo
         '

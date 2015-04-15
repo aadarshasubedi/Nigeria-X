@@ -31,7 +31,7 @@
         canvasX = (LEVELSCROLL * -1) - 1
         canvasY = (LEVELSCROLL * -1) - 1
 
-        ground = New landscape(GFX, passedterrainfile, passedEnv)
+        ground = New landscape(GFX, passedterrainfile, passedEnv, levelSize)
         populateBrushes()
         globalTime.Enabled = True
     End Sub
@@ -164,17 +164,21 @@
         'if mouse is clicked on canvas, check each member of ground array for intersections. If so, set affected tile image to that
         'provided by cursorpainter variable
         Dim location As Integer = -1
-        For Each tile As terrain In ground.groundObjects
-            'location is used to figure out which member of ground array to modify based on the for.. parse
-            location += 1
-            If tile.boundaries.IntersectsWith(New Rectangle(e.Location, New Size(1, 1))) Then
-                Try
-                    ground.groundObjects(location) = New terrain(GFX, cursorPainter, tile.locationX, tile.locationY)
-                Catch ex As Exception
-                    MsgBox("No brush selected!")
-                End Try
-            End If
-        Next tile
+        If cursorPainter Is Nothing Then
+            MsgBox("No brush selected!")
+        Else
+            For Each tile As terrain In ground.groundObjects
+                'location is used to figure out which member of ground array to modify based on the for.. parse
+                location += 1
+                'adding canvas x and y helps offset the cursor to where the position is actually rendering on the backbuffer bitmap
+                'in lieu of true raycasting
+                If tile.boundaries.IntersectsWith(New Rectangle(New Point(e.X - canvasX, e.Y - canvasY), New Size(1, 1))) Then
+                    Dim tblock As New terrain(GFX, cursorPainter, tile.locationX, tile.locationY)
+                    tblock.staticSprite.Tag = cursorPainter.Tag
+                    ground.groundObjects(location) = tblock
+                End If
+            Next
+        End If
     End Sub
     Private Function populateBrushes()
         'this attempts to pull members of the terraintype array, redeclare them as pictureboxes, and plop them into the brushes groupbox
@@ -199,9 +203,10 @@
         cursorPainter = item.Image
     End Sub
     Private Sub writeToFile(sender As Object, e As System.EventArgs) Handles SaveToolStripMenuItem.Click
-        FileOpen(1, terrainFile, OpenMode.Output)
+        'FileOpen(1, terrainFile, OpenMode.Output)
         Dim writeFactor As Integer = 0
-        Dim conjunctString As String = ""
+        Dim conjunctString As String
+        conjunctString = levelSize & "," & vbNewLine
         Select Case levelSize
             Case "Tiny"
                 writeFactor = 8
@@ -212,19 +217,23 @@
             Case "XXL"
                 writeFactor = 64
         End Select
-        Dim lineLength As Integer = 0
+        Dim lineLength As Integer = -1
         For Each tile As terrain In ground.groundObjects
             lineLength += 1
-            For Brush As Integer = 1 To ground.brushes.Length - 1
+            For Brush As Integer = 0 To ground.brushes.Length - 1
                 If tile.staticSprite.Tag = ground.brushes(Brush).Tag Then
-                    If lineLength = writeFactor Then
-                        Write(1, Brush & "," & vbNewLine)
-                        lineLength = 0
+                    If lineLength = (writeFactor - 1) Then
+                        conjunctString &= (Brush & "," & vbNewLine)
+                        lineLength = -1
                     Else
-                        Write(1, Brush)
+                        conjunctString &= Brush
                     End If
+
+                Else
+                    'MsgBox("the tile tag " & tile.staticSprite.Tag & " is not equal to brush tag " & ground.brushes(Brush).tag)
                 End If
             Next
         Next
+        My.Computer.FileSystem.WriteAllText(terrainFile, conjunctString, False)
     End Sub
 End Class

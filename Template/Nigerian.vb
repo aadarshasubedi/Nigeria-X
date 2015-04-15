@@ -35,7 +35,7 @@ Public Class Nigerian
         canvasX = (LEVELSCROLL * -1) - 1
         canvasY = (LEVELSCROLL * -1) - 1
 
-        ground = New landscape(GFX, passedterrainfile, passedEnv)
+        ground = New landscape(GFX, passedterrainfile, passedEnv, levelSize)
         globalTime.Enabled = True
     End Sub
     Structure levelBnd
@@ -88,7 +88,11 @@ Public Class Nigerian
         'call the Place method of all objects intended to be visible to ensure that they show up
         'on this refresh
         ground.DrawMe()
+        For Each block As terrain In ground.groundObjects
+            block.calcCollision(enemies)
+        Next
         For Each thing As entity In enemies
+            thing.calcCollision(enemies)
             thing.entityPlace()
             thing.entityMovement()
         Next
