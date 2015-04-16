@@ -225,24 +225,24 @@
                     Case "S"
                         graceDir = "S"
                         If Me.storedDir = "E" Then
-                            Me.locationX -= Me.staticSprite.Width / 3
+                            Me.locationX -= Me.staticSprite.Width / 5
                         ElseIf Me.storedDir = "W" Then
-                            Me.locationX += Me.staticSprite.Width / 3
+                            Me.locationX += Me.staticSprite.Width / 5
                         End If
                     Case "E"
                         graceDir = "E"
                         If Me.storedDir = "S" Then
-                            Me.locationY -= Me.staticSprite.Width / 3
+                            Me.locationY -= Me.staticSprite.Width / 5
                         ElseIf Me.storedDir = "N" Then
-                            Me.locationY += Me.staticSprite.Width / 3
+                            Me.locationY += Me.staticSprite.Width / 5
                         End If
 
                     Case "W"
                         graceDir = "W"
                         If Me.storedDir = "S" Then
-                            Me.locationY -= Me.staticSprite.Width / 3
+                            Me.locationY -= Me.staticSprite.Width / 5
                         ElseIf Me.storedDir = "N" Then
-                            Me.locationY += Me.staticSprite.Width / 3
+                            Me.locationY += Me.staticSprite.Width / 5
                         End If
                 End Select
                 Me.MoveSpeed = 2
