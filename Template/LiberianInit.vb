@@ -67,7 +67,7 @@
             Dim starterScape(-1) As String
             Dim tempStr As String = ""
             populateScape(starterScape)
-            tempStr &= cobSize.SelectedItem & "," & vbNewLine
+            tempStr &= cobSize.SelectedItem & "," & vbNewLine '& cobEnvironment.SelectedItem & "," & vbNewLine
             For xu As Integer = 0 To starterScape.Length - 1
                 tempStr &= starterScape(xu) & vbNewLine
             Next

@@ -8,9 +8,9 @@ Public Class Nigerian
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        DoubleBuffered = True
-        SetStyle(ControlStyles.UserPaint, True)
-        SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+        ' DoubleBuffered = True
+        'SetStyle(ControlStyles.UserPaint, True)
+        'SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         Me.KeyPreview = True    'enable keypress event handlers
 
         terrainFile = passedterrainfile
@@ -32,17 +32,22 @@ Public Class Nigerian
         'When it comes time to render, BackBuffer is then drawn to the form. This prevents flickering.
         GFX = Graphics.FromImage(BackBuffer)
 
-        canvasX = (LEVELSCROLL * -1) - 1
-        canvasY = (LEVELSCROLL * -1) - 1
+        'the outer bounds of canvas movement, so dimmed as the SCROLLRATE const + 1 for avoid clipping
+        canvasX = (SCROLLRATE * -1) - 1
+        canvasY = (SCROLLRATE * -1) - 1
 
         ground = New landscape(GFX, passedterrainfile, passedEnv, levelSize)
+        jPlayer = New player(GFX, "player", lblCanvas.Width / 2, lblCanvas.Height / 2)
+        jPlayer.shouldCollide = True
+        players(0) = jPlayer
+        SCROLLRATE = jPlayer.MoveSpeed
         globalTime.Enabled = True
     End Sub
     Structure levelBnd
         Dim vertical As Point
         Dim horizontal As Point
     End Structure
-    Const LEVELSCROLL As Integer = 4
+    Dim jPlayer As player
     Dim currentTerrain() As String 'array to contain terrain objects
     Dim terrainFile As String = Nothing   'pending string for lvl file reference on initialization
     Dim levelSize As String = Nothing
@@ -53,8 +58,10 @@ Public Class Nigerian
     Dim canvasRight, canvasLeft, canvasUp, canvasDown As Boolean
     Dim level As Image = My.Resources.back2 'overall level background behind terrain objects
     Dim enemies(-1) As entity
+    Dim players(0) As player
     Dim ground As landscape
     Dim BackBuffer As Bitmap 'collector bitmap as described above
+    Dim SCROLLRATE As Integer
     Public GFX As Graphics  'described in new constructor
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles ExitToolStripMenuItem.Click
@@ -81,7 +88,7 @@ Public Class Nigerian
     End Sub
 
     Private Sub global_ticking(sender As Object, e As System.EventArgs) Handles globalTime.Tick
-        Me.DoubleBuffered = True
+        'Me.DoubleBuffered = True
         Dim ourCanvas As Graphics = lblCanvas.CreateGraphics
         ticks += 1
         'set gfx to plain current background for clean refresh
@@ -91,12 +98,19 @@ Public Class Nigerian
         ground.DrawMe()
         For Each block As terrain In ground.groundObjects
             block.calcCollision(enemies)
+            block.calcCollision(players)
         Next
+        jPlayer.calcCollision(ground.groundObjects)
+        jPlayer.entityPlace()
+        jPlayer.tryMove()
         For Each thing As entity In enemies
-            thing.calcCollision(ground.groundObjects)
+            'thing.calcCollision(ground.groundObjects)
             thing.entityPlace()
-            thing.entityMovement()
+            thing.tryMove()
         Next
+        
+
+
         updatelevelBounds()
         moveView()
         'draw completed scene on ourCanvas
@@ -107,40 +121,55 @@ Public Class Nigerian
         frmMainMenu.wakeMenu()
     End Sub
     Private Sub moveView()
+
+        Dim canvasCenter As New Point(((lblCanvas.Width / 2) - jPlayer.staticSprite.Width / 2) - canvasX, _
+                                      ((lblCanvas.Height / 2) - jPlayer.staticSprite.Height) - canvasY)
+
         'this is called every tick/refresh to check if the scroll is moving and also constrain it
         'via canvasX/canvasY variables and the points contained in lblBND structure levelbounds
-        If canvasRight = True Then
-            If levelBounds.horizontal.X - LEVELSCROLL > (lblCanvas.Location.X + lblCanvas.Width) Then
-                canvasX -= LEVELSCROLL
+
+        'NEW: moveView actually keeps track of the location of the center of the label and compares it to the moving jPlayer entity
+        'if it matches or comes close to it in traversing the level, we've converted the existing function to move the buffer bitmap
+        'on occurence to the desired location
+
+        'in this way the screen keeps with the player
+        If canvasRight = True And jPlayer.locationX >= canvasCenter.X Then
+            If levelBounds.horizontal.X - SCROLLRATE > (lblCanvas.Location.X + lblCanvas.Width) Then
+                canvasX -= SCROLLRATE
             End If
         End If
-        If canvasLeft = True Then
-            If canvasX + LEVELSCROLL < 0 Then
-                canvasX += LEVELSCROLL
+        If canvasLeft = True And jPlayer.locationX <= canvasCenter.X Then
+            If canvasX + SCROLLRATE < 0 Then
+                canvasX += SCROLLRATE
             End If
         End If
-        If canvasUp = True Then
-            If canvasY + LEVELSCROLL < 0 Then
-                canvasY += LEVELSCROLL
+        If canvasUp = True And jPlayer.location.Y <= canvasCenter.Y Then
+            If canvasY + SCROLLRATE < 0 Then
+                canvasY += SCROLLRATE
             End If
         End If
-        If canvasDown = True Then
-            If levelBounds.vertical.Y - LEVELSCROLL > (lblCanvas.Location.Y + lblCanvas.Height) Then
-                canvasY -= LEVELSCROLL
+        If canvasDown = True And jPlayer.location.Y >= canvasCenter.Y Then
+            If levelBounds.vertical.Y - SCROLLRATE > (lblCanvas.Location.Y + lblCanvas.Height) Then
+                canvasY -= SCROLLRATE
             End If
         End If
     End Sub
 
     Private Sub isViewMove(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
         'check if keypress; if so, set movement to true
+        jPlayer.move = True
         Select Case e.KeyCode
             Case Keys.A
+                jPlayer.moveDirection = "W"
                 canvasLeft = True
             Case Keys.D
+                jPlayer.moveDirection = "E"
                 canvasRight = True
             Case Keys.W
+                jPlayer.moveDirection = "N"
                 canvasUp = True
             Case Keys.S
+                jPlayer.moveDirection = "S"
                 canvasDown = True
         End Select
     End Sub
@@ -148,15 +177,55 @@ Public Class Nigerian
         'on key release set movement to false
         Select Case e.KeyCode
             Case Keys.A
+                If jPlayer.moveDirection = "W" Then
+                    jPlayer.move = False
+                End If
+                'Call isViewMove(sender, e)
                 canvasLeft = False
             Case Keys.D
+                If jPlayer.moveDirection = "E" Then
+                    jPlayer.move = False
+                End If
+                'Call isViewMove(sender, e)
                 canvasRight = False
             Case Keys.W
+                If jPlayer.moveDirection = "N" Then
+                    jPlayer.move = False
+                End If
+                'Call isViewMove(sender, e)
                 canvasUp = False
             Case Keys.S
+                If jPlayer.moveDirection = "S" Then
+                    jPlayer.move = False
+                End If
+                'Call isViewMove(sender, e)
                 canvasDown = False
                 'Case Else
                 'MsgBox("WTF happened?")
         End Select
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        For Each enemy As entity In enemies
+            enemy.moveDirection = "N"
+        Next
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        For Each enemy As entity In enemies
+            enemy.moveDirection = "S"
+        Next
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        For Each enemy As entity In enemies
+            enemy.moveDirection = "E"
+        Next
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        For Each enemy As entity In enemies
+            enemy.moveDirection = "W"
+        Next
     End Sub
 End Class

@@ -7,6 +7,11 @@
     Private moveDir As Char = "N"
     Private moving As Boolean
     'bounds used for collision etc
+    Public graceDir As String = ""
+    Public isColliding As Boolean = False
+    Public collisions() As entity
+    Public storedDir As Char = "Q"
+    Public collisionHandled As Boolean = False
     Private collide As Boolean = False
     Private bounds As New Rectangle
     'the graphics class to draw to
@@ -150,7 +155,7 @@
         visObject.current.MakeTransparent(Color.White)
         spriteDir(visObject)
         If moving Then
-            pcanvas.DrawImage(visObject.current, locObject)
+            'pcanvas.DrawImage(visObject.current, locObject)
             bounds.Location = locObject
             Select Case moveDir
                 Case "N"
@@ -167,17 +172,62 @@
         End If
     End Sub
     Function calcCollision(ByVal objects() As entity)
+        collisions = objects
         For Each member As entity In objects
             If Me.shouldCollide And member.shouldCollide Then
                 Dim memberestColl As Rectangle = member.boundaries
-                memberestColl.Inflate(member.MoveSpeed, member.MoveSpeed)
-                If Me.boundaries.IntersectsWith(memberestColl) Then
-                    member.moveDir = "S"
-                    member.move = False
+                memberestColl.Inflate(0, 0)
+                If member.isColliding Then
+                Else
+                    If member.collisionHandled And (member.graceDir.Contains(member.moveDirection)) And Not member.moveDirection = member.storedDir Then
+                        If Me.boundaries.IntersectsWith(memberestColl) Then
+                            'MsgBox("found")
+                            'member.isColliding = True
+                            'member.collisionHandled = False
+                            'member.storedDir = member.moveDirection
+                        End If
+                    Else
+                        If Me.boundaries.IntersectsWith(memberestColl) Then
+                            member.isColliding = True
+                            'MsgBox("collision with " & member.locationX)
+                            member.storedDir = member.moveDirection
+                            'MsgBox("storedDir set to current direction " & Me.storedDir)
+                            'If member.collisionHandled = False Then
+                            'ReDim Preserve member.collisions(member.collisions.Length)
+                            'member.isColliding = True
+                            'member.collisions(member.collisions.Length - 1) = Me
+                        End If
+                    End If
                 End If
             End If
         Next
+        'Return isColliding
     End Function
+    Sub tryMove()
+        If Me.isColliding Then
+            If Me.moveDir = Me.storedDir Then
+                'MsgBox("stoppingmovement")
+                Me.MoveSpeed = 0
+            Else
+                Me.collisionHandled = True
+                'Me.storedDir = Me.moveDir
+                Select Case Me.moveDir
+                    Case "N"
+                        graceDir = "NS"
+                    Case "S"
+                        graceDir = "NS"
+                    Case Else
+                        graceDir = "EW"
+                End Select
+                Me.MoveSpeed = 2
+                Me.isColliding = False
+            End If
+            'entityMovement()
+        Else
+
+        End If
+        entityMovement()
+    End Sub
     Sub entityMovement()
         If moving = True Then
             Select Case moveDir
@@ -191,7 +241,7 @@
                     locObject.X -= moveRate
             End Select
         End If
-        Call entityPlace()
+        'Call entityPlace()
     End Sub
     Sub Dispose()
         Me.Dispose()

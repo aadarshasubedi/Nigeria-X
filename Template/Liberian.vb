@@ -12,6 +12,7 @@
         terrainFile = passedterrainfile
         'set backbuffer bitmap to be the size of containing label
         levelSize = size
+        levelEnv = passedEnv
         Select Case levelSize
             Case "Tiny"
                 BackBuffer = New Bitmap(256, 256)
@@ -44,6 +45,7 @@
     Dim terrainFile As String
     Dim ground As landscape
     Dim levelSize As String
+    Dim levelEnv As String
     Dim canvasbounds As Rectangle
     Dim levelBounds As levelBnd
     'Dim terraintype(0) As Image 'containing array for terrain types in /graphics/terrain directory
@@ -207,7 +209,7 @@
         'FileOpen(1, terrainFile, OpenMode.Output)
         Dim writeFactor As Integer = 0
         Dim conjunctString As String
-        conjunctString = levelSize & "," & vbNewLine
+        conjunctString = levelSize & "," & vbNewLine '& levelEnv & "," & vbNewLine
         Select Case levelSize
             Case "Tiny"
                 writeFactor = 8

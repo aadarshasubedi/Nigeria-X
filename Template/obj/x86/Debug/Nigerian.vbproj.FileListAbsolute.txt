@@ -44,3 +44,15 @@ H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.vbproj.GenerateResource.Cach
 H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.exe
 H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.xml
 H:\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.pdb
+C:\Users\108173\Desktop\Nigeria-X-master\Template\bin\Debug\Nigerian.exe
+C:\Users\108173\Desktop\Nigeria-X-master\Template\bin\Debug\Nigerian.pdb
+C:\Users\108173\Desktop\Nigeria-X-master\Template\bin\Debug\Nigerian.xml
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.Liberian.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.LiberianInit.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.frmMainMenu.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.Nigerian.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.Resources.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.vbproj.GenerateResource.Cache
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.exe
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.xml
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.pdb
