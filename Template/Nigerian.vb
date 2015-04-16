@@ -3,10 +3,11 @@
 '
 '
 Public Class Nigerian
-    Sub New(passedterrainfile As String, passedEnv As String, size As String)
+    Sub New(passedterrainfile As String, passedEnv As String, size As String, uplayer As String)
 
         ' This call is required by the designer.
         InitializeComponent()
+        Me.Text = Me.Name
         ' Add any initialization after the InitializeComponent() call.
         ' DoubleBuffered = True
         'SetStyle(ControlStyles.UserPaint, True)
@@ -37,7 +38,7 @@ Public Class Nigerian
         canvasY = (SCROLLRATE * -1) - 1
 
         ground = New landscape(GFX, passedterrainfile, passedEnv, levelSize)
-        jPlayer = New player(GFX, "player", lblCanvas.Width / 2, lblCanvas.Height / 2)
+        jPlayer = New player(GFX, uplayer, lblCanvas.Width / 2, lblCanvas.Height / 2)
         jPlayer.shouldCollide = True
         players(0) = jPlayer
         SCROLLRATE = jPlayer.MoveSpeed

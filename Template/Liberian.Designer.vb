@@ -30,7 +30,7 @@ Partial Class Liberian
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.globalTime = New System.Windows.Forms.Timer(Me.components)
         Me.grpBrushes = New System.Windows.Forms.GroupBox()
-        Me.grpBrushVScroll = New System.Windows.Forms.VScrollBar()
+        Me.panBrushes = New System.Windows.Forms.Panel()
         Me.MenuStrip1.SuspendLayout()
         Me.grpBrushes.SuspendLayout()
         Me.SuspendLayout()
@@ -38,9 +38,9 @@ Partial Class Liberian
         'lblCanvas
         '
         Me.lblCanvas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblCanvas.Location = New System.Drawing.Point(112, 24)
+        Me.lblCanvas.Location = New System.Drawing.Point(106, 24)
         Me.lblCanvas.Name = "lblCanvas"
-        Me.lblCanvas.Size = New System.Drawing.Size(272, 273)
+        Me.lblCanvas.Size = New System.Drawing.Size(278, 273)
         Me.lblCanvas.TabIndex = 0
         '
         'MenuStrip1
@@ -77,22 +77,22 @@ Partial Class Liberian
         '
         'grpBrushes
         '
-        Me.grpBrushes.Controls.Add(Me.grpBrushVScroll)
-        Me.grpBrushes.Location = New System.Drawing.Point(12, 27)
+        Me.grpBrushes.Controls.Add(Me.panBrushes)
+        Me.grpBrushes.Location = New System.Drawing.Point(2, 27)
         Me.grpBrushes.Name = "grpBrushes"
-        Me.grpBrushes.Size = New System.Drawing.Size(94, 224)
+        Me.grpBrushes.Size = New System.Drawing.Size(100, 224)
         Me.grpBrushes.TabIndex = 2
         Me.grpBrushes.TabStop = False
         Me.grpBrushes.Text = "Brushes"
         '
-        'grpBrushVScroll
+        'panBrushes
         '
-        Me.grpBrushVScroll.Dock = System.Windows.Forms.DockStyle.Right
-        Me.grpBrushVScroll.Location = New System.Drawing.Point(74, 16)
-        Me.grpBrushVScroll.Maximum = 10
-        Me.grpBrushVScroll.Name = "grpBrushVScroll"
-        Me.grpBrushVScroll.Size = New System.Drawing.Size(17, 205)
-        Me.grpBrushVScroll.TabIndex = 3
+        Me.panBrushes.AutoScroll = True
+        Me.panBrushes.Dock = System.Windows.Forms.DockStyle.Top
+        Me.panBrushes.Location = New System.Drawing.Point(3, 16)
+        Me.panBrushes.Name = "panBrushes"
+        Me.panBrushes.Size = New System.Drawing.Size(94, 207)
+        Me.panBrushes.TabIndex = 4
         '
         'Liberian
         '
@@ -118,6 +118,6 @@ Partial Class Liberian
     Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents globalTime As System.Windows.Forms.Timer
     Friend WithEvents grpBrushes As System.Windows.Forms.GroupBox
-    Friend WithEvents grpBrushVScroll As System.Windows.Forms.VScrollBar
     Friend WithEvents SaveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents panBrushes As System.Windows.Forms.Panel
 End Class

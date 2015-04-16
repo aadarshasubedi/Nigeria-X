@@ -186,6 +186,7 @@
     Private Function populateBrushes()
         'this attempts to pull members of the terraintype array, redeclare them as pictureboxes, and plop them into the brushes groupbox
         'additionally an event handler is added for click to each to set cursorPainter to their corresponding texture
+        panBrushes.AutoScroll = True
         Dim grpBrushLoc As Integer = 25
         For tblock As Integer = 0 To ground.brushes.Length - 1
             Dim brushGUI As New PictureBox
@@ -193,11 +194,13 @@
                 .Image = ground.brushes(tblock)
                 .SizeMode = PictureBoxSizeMode.StretchImage
                 .Size = New Size(64, 64)
-                .Parent = grpBrushes
+                .Parent = panBrushes
             End With
             AddHandler brushGUI.Click, AddressOf selectBrush
-            brushGUI.Location = New Point(10, grpBrushLoc)
+            brushGUI.Location = New Point(6, grpBrushLoc)
             grpBrushLoc += 65
+            'panBrushes.Height += 65
+            'grpBrushVScroll.Maximum += 1
         Next
         Return 0
     End Function
@@ -240,5 +243,11 @@
             Next
         Next
         My.Computer.FileSystem.WriteAllText(terrainFile, conjunctString, False)
+    End Sub
+
+    Private Sub grpBrushVScroll_Scroll(sender As Object, e As ScrollEventArgs)
+        panBrushes.SendToBack()
+        panBrushes.Top -= e.ScrollOrientation
+        panBrushes.SendToBack()
     End Sub
 End Class

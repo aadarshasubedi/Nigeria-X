@@ -3,22 +3,38 @@
     Dim GFX As Graphics
     Dim terrainFile As String
     Dim ourSize As String
+    Dim collideArray As String
     Dim terrainBrush(-1) As Image 'containing array for terrain types in /graphics/terrain directory
     Dim envDir As String    'environment is a tileset, sort of. this string stores the folder location as specified in caller
     Dim currentTerrain(-1) As String   'array to contain terrain objects
+    Dim levelCollisiondata As String
     Sub New(canvas As Graphics, groundFile As String, environment As String, lvlsize As String)
         GFX = canvas
+        If environment = Nothing Then
+            envDir = "normal"
+        Else
+            envDir = environment
+        End If
+
         ourSize = lvlsize
         terrainFile = groundFile
         populateterrainBrushes()
         buildTerrain(currentTerrain)
+        levelCollisiondata = My.Computer.FileSystem.ReadAllText("graphics/terrain/" & envDir & "/passable.txt")
+        makeCollidables()
     End Sub
 
     Function populateterrainBrushes()
+
+        'Dim cleanfoundFile As String
         Try
             'initialize terraintype array to contain any images found inside the /terrain/*environment* directory
             For Each foundFile As String In My.Computer.FileSystem.GetFiles("graphics/terrain/" & envDir, FileIO.SearchOption.SearchTopLevelOnly, "*.png")
                 'MsgBox(foundFile)
+                'cleanfoundFile = foundFile.Remove(0, foundFile.LastIndexOf("/"))
+                'If levelCollisiondata.Contains(cleanfoundFile) Then
+                'collideArray &= foundFile
+                'End If
                 ReDim Preserve terrainBrush(terrainBrush.Length)
                 terrainBrush(terrainBrush.Length - 1) = Image.FromFile(foundFile)
                 terrainBrush(terrainBrush.Length - 1).Tag = foundFile
@@ -31,7 +47,16 @@
     Function DrawMe()
         For Each tile As terrain In groundObjects
             tile.entityPlace()
-            If tile.staticSprite.Tag = terrainBrush(2).Tag Then
+        Next
+    End Function
+    Function makeCollidables()
+        Dim uncleantag As String
+        For Each tile As terrain In groundObjects
+            uncleantag = tile.staticSprite.Tag
+            uncleantag = uncleantag.Remove(0, uncleantag.LastIndexOf("\") + 1)
+            uncleantag = uncleantag.Remove(uncleantag.IndexOf("."), 4)
+            'MsgBox(uncleantag)
+            If levelCollisiondata.Contains(uncleantag) Then
                 tile.shouldCollide = True
             End If
         Next

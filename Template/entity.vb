@@ -27,11 +27,14 @@
         'this sub is intended to be simpler - called using a name that correlates to a file directory which contains
         'files FOLLOWING NAMING CONVENTION ENTITYNAME_DIRECTION.PNG needed to fill sprite structure
         Try
-            Dim operDir As String = "graphics/" & name
+            Dim operDir As String = "graphics/characters/" & name
             With visObject
                 .N = Image.FromFile(operDir & "/" & name & "_north.png")
+                .N.SetResolution(32, 32)
                 .E = Image.FromFile(operDir & "/" & name & "_east.png")
+                .E.SetResolution(32, 32)
                 .S = Image.FromFile(operDir & "/" & name & "_south.png")
+                .S.SetResolution(32, 32)
                 .W = Image.FromFile(operDir & "/" & name & "_west.png")
             End With
         Catch ex As Exception
@@ -152,7 +155,7 @@
         bounds.Height = visObject.current.Height
     End Sub
     Sub entityPlace()
-        visObject.current.MakeTransparent(Color.White)
+        visObject.current.MakeTransparent(Color.Black)
         spriteDir(visObject)
         If moving Then
             'pcanvas.DrawImage(visObject.current, locObject)
@@ -259,7 +262,7 @@
             Case "W"
                 target.current = target.W
         End Select
-        visObject.current.MakeTransparent(Color.White)
+        visObject.current.MakeTransparent(Color.Black)
         Return 0
     End Function
 
