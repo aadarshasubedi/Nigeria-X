@@ -216,11 +216,34 @@
                 'Me.storedDir = Me.moveDir
                 Select Case Me.moveDir
                     Case "N"
-                        graceDir = "NS"
+                        graceDir = "N"
+                        If Me.storedDir = "E" Then
+                            Me.locationX -= Me.staticSprite.Width / 3
+                        ElseIf Me.storedDir = "W" Then
+                            Me.locationX += Me.staticSprite.Width / 3
+                        End If
                     Case "S"
-                        graceDir = "NS"
-                    Case Else
-                        graceDir = "EW"
+                        graceDir = "S"
+                        If Me.storedDir = "E" Then
+                            Me.locationX -= Me.staticSprite.Width / 3
+                        ElseIf Me.storedDir = "W" Then
+                            Me.locationX += Me.staticSprite.Width / 3
+                        End If
+                    Case "E"
+                        graceDir = "E"
+                        If Me.storedDir = "S" Then
+                            Me.locationY -= Me.staticSprite.Width / 3
+                        ElseIf Me.storedDir = "N" Then
+                            Me.locationY += Me.staticSprite.Width / 3
+                        End If
+
+                    Case "W"
+                        graceDir = "W"
+                        If Me.storedDir = "S" Then
+                            Me.locationY -= Me.staticSprite.Width / 3
+                        ElseIf Me.storedDir = "N" Then
+                            Me.locationY += Me.staticSprite.Width / 3
+                        End If
                 End Select
                 Me.MoveSpeed = 2
                 Me.isColliding = False
