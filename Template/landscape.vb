@@ -78,10 +78,11 @@
                 'MsgBox("There are " & terrainArray(line).Length - 1 & "tiles in this line, which is " & terrainArray(line))
                 Dim consideredData As String = terrainArray(line).Substring(tile, 1)
                 If consideredData.Contains(".") Then
-                    offset = True
+                    'offset = True
                     Continue For
                 ElseIf consideredData.Contains("E") Then
-                    Exit For
+                    MsgBox(consideredData)
+                    Continue For
                 End If
                 For consideredBrush As Integer = 0 To terrainBrush.Length - 1
                     If consideredData = consideredBrush Then

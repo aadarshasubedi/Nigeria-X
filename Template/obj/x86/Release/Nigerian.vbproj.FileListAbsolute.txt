@@ -1,0 +1,13 @@
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\bin\Release\Nigerian.exe
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\bin\Release\Nigerian.pdb
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\bin\Release\Nigerian.xml
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.Liberian.resources
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.LiberianInit.resources
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.frmMainMenu.resources
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.Nigerian.resources
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.Resources.resources
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.NigerianInit.resources
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.vbproj.GenerateResource.Cache
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.exe
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.xml
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.pdb

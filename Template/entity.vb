@@ -155,7 +155,7 @@
         bounds.Height = visObject.current.Height
     End Sub
     Sub entityPlace()
-        visObject.current.MakeTransparent(Color.Black)
+        visObject.current.MakeTransparent(Color.White)
         spriteDir(visObject)
         If moving Then
             'pcanvas.DrawImage(visObject.current, locObject)
@@ -285,7 +285,7 @@
             Case "W"
                 target.current = target.W
         End Select
-        visObject.current.MakeTransparent(Color.Black)
+        visObject.current.MakeTransparent(Color.White)
         Return 0
     End Function
 

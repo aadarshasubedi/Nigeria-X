@@ -11,6 +11,9 @@
         For Each foundobject As String In My.Computer.FileSystem.GetDirectories("graphics/characters", FileIO.SearchOption.SearchTopLevelOnly)
             cobPlayer.Items.Add(foundobject.Remove(0, foundobject.LastIndexOf("\") + 1))
         Next
+        For Each foundDir As String In My.Computer.FileSystem.GetDirectories("graphics/terrain", FileIO.SearchOption.SearchTopLevelOnly)
+            cobDiff.Items.Add(foundDir.Remove(0, foundDir.LastIndexOf("\") + 1))
+        Next
     End Sub
     Dim player As String
     Dim level As String
@@ -38,7 +41,7 @@
     Private Sub btnGO_Click(sender As Object, e As EventArgs) Handles btnGO.Click
         Dim lvlSize As String = My.Computer.FileSystem.ReadAllText(level)
         lvlSize = lvlSize.Substring(0, lvlSize.IndexOf(","))
-        Dim newgame As New Nigerian(level, "normal", lvlSize, cobPlayer.SelectedItem)
+        Dim newgame As New Nigerian(level, cobDiff.SelectedItem, lvlSize, cobPlayer.SelectedItem)
         newgame.Enabled = True
         newgame.Visible = True
         newgame.Activate()
