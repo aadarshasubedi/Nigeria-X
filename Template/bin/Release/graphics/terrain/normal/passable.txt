@@ -1,2 +1,1 @@
-gravel
-water
+﻿dirt.png

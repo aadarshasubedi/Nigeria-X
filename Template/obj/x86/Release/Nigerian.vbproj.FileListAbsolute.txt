@@ -11,3 +11,4 @@ C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nige
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.exe
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.xml
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.pdb
+C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.tilesettings.resources

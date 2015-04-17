@@ -78,6 +78,7 @@ Partial Class frmMainMenu
         Me.Controls.Add(Me.btnEditor)
         Me.Controls.Add(Me.btnNewGame)
         Me.Name = "frmMainMenu"
+        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
         Me.Text = "Main Menu"
         Me.ResumeLayout(False)
 

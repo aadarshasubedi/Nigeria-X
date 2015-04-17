@@ -75,7 +75,7 @@ Public Class Nigerian
         End With
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As System.EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As System.EventArgs)
         Dim mainCanvas As Graphics = lblCanvas.CreateGraphics
         Dim enemy As New entity(GFX, "test", 42, 32)
         enemy.shouldCollide = True
@@ -150,7 +150,7 @@ Public Class Nigerian
             End If
         End If
         If canvasDown = True And jPlayer.location.Y >= canvasCenter.Y Then
-            If levelBounds.vertical.Y - SCROLLRATE > (lblCanvas.Location.Y + lblCanvas.Height) Then
+            If levelBounds.vertical.Y + 20 > (lblCanvas.Location.Y + lblCanvas.Height) Then
                 canvasY -= SCROLLRATE
             End If
         End If
@@ -204,29 +204,5 @@ Public Class Nigerian
                 'Case Else
                 'MsgBox("WTF happened?")
         End Select
-    End Sub
-
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        For Each enemy As entity In enemies
-            enemy.moveDirection = "N"
-        Next
-    End Sub
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        For Each enemy As entity In enemies
-            enemy.moveDirection = "S"
-        Next
-    End Sub
-
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        For Each enemy As entity In enemies
-            enemy.moveDirection = "E"
-        Next
-    End Sub
-
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        For Each enemy As entity In enemies
-            enemy.moveDirection = "W"
-        Next
     End Sub
 End Class

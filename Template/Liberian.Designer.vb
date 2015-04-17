@@ -31,6 +31,8 @@ Partial Class Liberian
         Me.globalTime = New System.Windows.Forms.Timer(Me.components)
         Me.grpBrushes = New System.Windows.Forms.GroupBox()
         Me.panBrushes = New System.Windows.Forms.Panel()
+        Me.EditorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TileSettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.grpBrushes.SuspendLayout()
         Me.SuspendLayout()
@@ -45,7 +47,7 @@ Partial Class Liberian
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditorToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(384, 24)
@@ -62,13 +64,13 @@ Partial Class Liberian
         'SaveToolStripMenuItem
         '
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.SaveToolStripMenuItem.Text = "Save"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'globalTime
@@ -93,6 +95,19 @@ Partial Class Liberian
         Me.panBrushes.Name = "panBrushes"
         Me.panBrushes.Size = New System.Drawing.Size(94, 207)
         Me.panBrushes.TabIndex = 4
+        '
+        'EditorToolStripMenuItem
+        '
+        Me.EditorToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TileSettingsToolStripMenuItem})
+        Me.EditorToolStripMenuItem.Name = "EditorToolStripMenuItem"
+        Me.EditorToolStripMenuItem.Size = New System.Drawing.Size(50, 20)
+        Me.EditorToolStripMenuItem.Text = "Editor"
+        '
+        'TileSettingsToolStripMenuItem
+        '
+        Me.TileSettingsToolStripMenuItem.Name = "TileSettingsToolStripMenuItem"
+        Me.TileSettingsToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.TileSettingsToolStripMenuItem.Text = "Tile Settings"
         '
         'Liberian
         '
@@ -120,4 +135,6 @@ Partial Class Liberian
     Friend WithEvents grpBrushes As System.Windows.Forms.GroupBox
     Friend WithEvents SaveToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents panBrushes As System.Windows.Forms.Panel
+    Friend WithEvents EditorToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents TileSettingsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class

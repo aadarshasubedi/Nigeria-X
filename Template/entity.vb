@@ -10,6 +10,7 @@
     Private moving As Boolean
     'bounds used for collision etc
     Public graceDir As String = ""
+    Public health As Integer = 30
     Public isColliding As Boolean = False
     Public collisions() As entity
     Public storedDir As Char = "Q"
@@ -26,21 +27,22 @@
         Dim W As Bitmap
     End Structure
     Sub New(ByVal ovrCanvas As Graphics, name As String, locx As Integer, locy As Integer)
+        'note : when constructing name must include subordinate file structure ie "/characters" & name (where name = bill)
         'this sub is intended to be simpler - called using a name that correlates to a file directory which contains
         'files FOLLOWING NAMING CONVENTION ENTITYNAME_DIRECTION.PNG needed to fill sprite structure
+        Dim operDir As String = "graphics/" & name
         Try
-            Dim operDir As String = "graphics/characters/" & name
             With visObject
-                .N = Image.FromFile(operDir & "/" & name & "_north.png")
+                .N = Image.FromFile(operDir & "/" & name.Substring(name.LastIndexOf("/")) & "_north.png")
                 .N.SetResolution(32, 32)
-                .E = Image.FromFile(operDir & "/" & name & "_east.png")
+                .E = Image.FromFile(operDir & "/" & name.Substring(name.LastIndexOf("/")) & "_east.png")
                 .E.SetResolution(32, 32)
-                .S = Image.FromFile(operDir & "/" & name & "_south.png")
+                .S = Image.FromFile(operDir & "/" & name.Substring(name.LastIndexOf("/")) & "_south.png")
                 .S.SetResolution(32, 32)
-                .W = Image.FromFile(operDir & "/" & name & "_west.png")
+                .W = Image.FromFile(operDir & "/" & name.Substring(name.LastIndexOf("/")) & "_west.png")
             End With
         Catch ex As Exception
-            MsgBox("Something went wrong! Recheck image files related to " & name & " in /graphics/" & name)
+            MsgBox("Something went wrong! Recheck image files related to " & name.Substring(name.LastIndexOf("/")) & " in /graphics/" & name)
         End Try
         locationX = locx
         locationY = locy
@@ -209,6 +211,7 @@
         'Return isColliding
     End Function
     Sub tryMove()
+        Static realMove As Integer = Me.MoveSpeed
         If Me.isColliding Then
             If Me.moveDir = Me.storedDir Then
                 'MsgBox("stoppingmovement")
@@ -247,7 +250,7 @@
                             Me.locationY += Me.staticSprite.Width / 5
                         End If
                 End Select
-                Me.MoveSpeed = 2
+                Me.MoveSpeed = realMove
                 Me.isColliding = False
             End If
             'entityMovement()

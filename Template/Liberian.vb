@@ -83,6 +83,7 @@
         Next
         updatelevelBounds()
         moveView()
+        mousechange(sender, e)
         'draw completed scene on ourCanvas
         ourCanvas.DrawImage(BackBuffer, canvasX, canvasY)
     End Sub
@@ -94,7 +95,7 @@
         'this is called every tick/refresh to check if the scroll is moving and also constrain it
         'via canvasX/canvasY variables and the points contained in lblBND structure levelbounds
         If canvasRight = True Then
-            If levelBounds.horizontal.X - LEVELSCROLL > (lblCanvas.Location.X + lblCanvas.Width) Then
+            If levelBounds.horizontal.X + 64 > (lblCanvas.Location.X + lblCanvas.Width) Then
                 canvasX -= LEVELSCROLL
             End If
         End If
@@ -188,25 +189,47 @@
         'additionally an event handler is added for click to each to set cursorPainter to their corresponding texture
         panBrushes.AutoScroll = True
         Dim grpBrushLoc As Integer = 25
+
         For tblock As Integer = 0 To ground.brushes.Length - 1
             Dim brushGUI As New PictureBox
             With brushGUI
                 .Image = ground.brushes(tblock)
-                .SizeMode = PictureBoxSizeMode.StretchImage
+                .SizeMode = PictureBoxSizeMode.CenterImage
                 .Size = New Size(64, 64)
                 .Parent = panBrushes
             End With
             AddHandler brushGUI.Click, AddressOf selectBrush
             brushGUI.Location = New Point(6, grpBrushLoc)
-            grpBrushLoc += 65
+            grpBrushLoc += 68
             'panBrushes.Height += 65
             'grpBrushVScroll.Maximum += 1
         Next
         Return 0
     End Function
+
+    Private Sub setbrushcollision(item As PictureBox)
+        'Dim caller As PictureBox = sender
+        'caller.BackColor = Color.Red
+        'sender = caller
+    End Sub
     Private Sub selectBrush(sender, e)
         Dim item As PictureBox = sender
+        'set every other control on the parent panel to not have background color
+        For Each gui As PictureBox In panBrushes.Controls
+            gui.BackColor = Nothing
+        Next
+        '...then assign backcolor to currently selected one!
         cursorPainter = item.Image
+        item.BackColor = Color.Blue
+        'Me.Cursor.Tag = item.Image
+    End Sub
+    Private Sub mousechange(sender As Object, e As EventArgs) Handles lblCanvas.MouseEnter
+        Dim nPoint As New Point(Me.Cursor.HotSpot.X, Cursor.HotSpot.Y)
+        If nPoint = Nothing Then
+        Else
+
+            GFX.DrawImage(Me.Cursor.Tag, nPoint)
+        End If
     End Sub
     Private Sub writeToFile(sender As Object, e As System.EventArgs) Handles SaveToolStripMenuItem.Click
         'FileOpen(1, terrainFile, OpenMode.Output)
@@ -249,5 +272,16 @@
         panBrushes.SendToBack()
         panBrushes.Top -= e.ScrollOrientation
         panBrushes.SendToBack()
+    End Sub
+
+
+    Private Sub ExitToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+        Me.Dispose()
+    End Sub
+
+    Private Sub TileSettingsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TileSettingsToolStripMenuItem.Click
+        Dim newSettings As New tilesettings(ground.brushes, levelEnv)
+        newSettings.Visible = True
+        newSettings.Enabled = True
     End Sub
 End Class
