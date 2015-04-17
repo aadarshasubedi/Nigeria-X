@@ -1,5 +1,5 @@
 ﻿Public Class tilesettings
-    Dim localTileArray(-1)
+    Dim localTileArray(-1) As String
     Dim trueEnviron As String
     Sub New(consideredItems() As Image, environ As String)
         InitializeComponent()
@@ -23,6 +23,15 @@
         For index As Integer = 0 To localTileArray.Length - 1
             Dim checker As New CheckBox()
             With checker
+                .Parent = panSettings
+                .Location = New Point(40, index * checker.Height)
+                .Text = localTileArray(index)
+            End With
+            Dim checkerPreview As New PictureBox
+            With checkerPreview
+                .Image = (Image.FromFile(trueEnviron.Remove(trueEnviron.LastIndexOf("/") + 1) & localTileArray(index)))
+                .SizeMode = PictureBoxSizeMode.StretchImage
+                .Size = New Size(checker.Height - 3, checker.Height - 3)
                 .Parent = panSettings
                 .Location = New Point(5, index * checker.Height)
                 .Text = localTileArray(index)
