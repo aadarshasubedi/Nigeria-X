@@ -63,6 +63,7 @@ Public Class Nigerian
     Dim ground As landscape
     Dim BackBuffer As Bitmap 'collector bitmap as described above
     Dim SCROLLRATE As Integer
+    Public projectiles(-1) As entity
     Public GFX As Graphics  'described in new constructor
 
     Private Sub ExitToolStripMenuItem_Click(sender As Object, e As System.EventArgs) Handles ExitToolStripMenuItem.Click
@@ -104,6 +105,10 @@ Public Class Nigerian
         jPlayer.calcCollision(ground.groundObjects)
         jPlayer.entityPlace()
         jPlayer.tryMove()
+        For Each shot As entity In projectiles
+            shot.entityPlace()
+            shot.entityMovement()
+        Next
         For Each thing As entity In enemies
             'thing.calcCollision(ground.groundObjects)
             thing.entityPlace()
@@ -158,20 +163,29 @@ Public Class Nigerian
 
     Private Sub isViewMove(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
         'check if keypress; if so, set movement to true
-        jPlayer.move = True
+
         Select Case e.KeyCode
             Case Keys.A
+                jPlayer.move = True
                 jPlayer.moveDirection = "W"
                 canvasLeft = True
             Case Keys.D
+                jPlayer.move = True
                 jPlayer.moveDirection = "E"
                 canvasRight = True
             Case Keys.W
+                jPlayer.move = True
                 jPlayer.moveDirection = "N"
                 canvasUp = True
             Case Keys.S
+                jPlayer.move = True
                 jPlayer.moveDirection = "S"
                 canvasDown = True
+            Case Keys.Space
+                Using ourwep As New equipment(jPlayer.locationX, jPlayer.locationY, GFX, "shell")
+                    ourwep.Fire(Me, jPlayer, jPlayer.locationX + jPlayer.staticSprite.Width / 2, _
+                                jPlayer.locationY + jPlayer.staticSprite.Height / 2, jPlayer.moveDirection)
+                End Using
         End Select
     End Sub
     Private Sub endViewMove(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyUp

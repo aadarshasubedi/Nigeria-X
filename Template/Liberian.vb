@@ -165,7 +165,6 @@
         End If
 
     End Function
-    
     Private Sub lblCanvas_MouseDown(sender As Object, e As MouseEventArgs) Handles lblCanvas.MouseDown
         'if mouse is clicked on canvas, check each member of ground array for intersections. If so, set affected tile image to that
         'provided by cursorpainter variable
@@ -176,11 +175,12 @@
             For Each tile As terrain In ground.groundObjects
                 'location is used to figure out which member of ground array to modify based on the for.. parse
                 location += 1
-                If tile.boundaries.IntersectsWith(New Rectangle(New Point(e.X - canvasX, e.Y - canvasY), New Size(1, 1))) Then
-                    Dim tblock As New terrain(GFX, cursorPainter, tile.locationX, tile.locationY)
-                    tblock.staticSprite.Tag = cursorPainter.Tag
+                    If tile.boundaries.IntersectsWith(New Rectangle(New Point(e.X - canvasX, e.Y - canvasY), New Size(1, 1))) Then
+                        Dim tblock As New terrain(GFX, cursorPainter, tile.locationX, tile.locationY)
+                        tblock.staticSprite.Tag = cursorPainter.Tag
                     ground.groundObjects(location) = tblock
-                End If
+
+                    End If
             Next
         End If
     End Sub

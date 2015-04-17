@@ -31,14 +31,14 @@ Partial Class tilesettings
         Me.panSettings.AutoScroll = True
         Me.panSettings.Location = New System.Drawing.Point(12, 16)
         Me.panSettings.Name = "panSettings"
-        Me.panSettings.Size = New System.Drawing.Size(203, 73)
+        Me.panSettings.Size = New System.Drawing.Size(203, 104)
         Me.panSettings.TabIndex = 0
         '
         'btnApply
         '
-        Me.btnApply.Location = New System.Drawing.Point(51, 95)
+        Me.btnApply.Location = New System.Drawing.Point(221, 42)
         Me.btnApply.Name = "btnApply"
-        Me.btnApply.Size = New System.Drawing.Size(84, 34)
+        Me.btnApply.Size = New System.Drawing.Size(42, 54)
         Me.btnApply.TabIndex = 1
         Me.btnApply.Text = "Apply"
         Me.btnApply.UseVisualStyleBackColor = True
@@ -47,7 +47,7 @@ Partial Class tilesettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(227, 128)
+        Me.ClientSize = New System.Drawing.Size(275, 132)
         Me.Controls.Add(Me.btnApply)
         Me.Controls.Add(Me.panSettings)
         Me.Name = "tilesettings"
