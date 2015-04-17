@@ -224,12 +224,6 @@
         'Me.Cursor.Tag = item.Image
     End Sub
     Private Sub mousechange(sender As Object, e As EventArgs) Handles lblCanvas.MouseEnter
-        Dim nPoint As New Point(Me.Cursor.HotSpot.X, Cursor.HotSpot.Y)
-        If nPoint = Nothing Then
-        Else
-
-            GFX.DrawImage(Me.Cursor.Tag, nPoint)
-        End If
     End Sub
     Private Sub writeToFile(sender As Object, e As System.EventArgs) Handles SaveToolStripMenuItem.Click
         'FileOpen(1, terrainFile, OpenMode.Output)

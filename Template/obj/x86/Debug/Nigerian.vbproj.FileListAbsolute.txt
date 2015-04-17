@@ -59,3 +59,4 @@ C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.pdb
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Debug\Nigerian.NigerianInit.resources
 C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.NigerianInit.resources
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Debug\Nigerian.tilesettings.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Debug\Nigerian.tilesettings.resources

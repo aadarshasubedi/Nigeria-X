@@ -12,3 +12,17 @@ C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nige
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.xml
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.pdb
 C:\Users\Larsa\Documents\#Lessons\Nigeria (VBASIC)\Template\obj\x86\Release\Nigerian.tilesettings.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.exe
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.xml
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.pdb
+C:\Users\108173\Desktop\Nigeria-X-master\Template\bin\Release\Nigerian.exe
+C:\Users\108173\Desktop\Nigeria-X-master\Template\bin\Release\Nigerian.pdb
+C:\Users\108173\Desktop\Nigeria-X-master\Template\bin\Release\Nigerian.xml
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.Liberian.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.LiberianInit.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.frmMainMenu.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.Nigerian.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.Resources.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.NigerianInit.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.tilesettings.resources
+C:\Users\108173\Desktop\Nigeria-X-master\Template\obj\x86\Release\Nigerian.vbproj.GenerateResource.Cache

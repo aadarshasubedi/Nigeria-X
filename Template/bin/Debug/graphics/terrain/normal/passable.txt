@@ -1,1 +1,3 @@
-stonewater
+﻿gravel.png
+stone.png
+water.png

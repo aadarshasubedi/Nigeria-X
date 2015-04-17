@@ -188,10 +188,10 @@
                 Else
                     If member.collisionHandled And (member.graceDir.Contains(member.moveDirection)) And Not member.moveDirection = member.storedDir Then
                         If Me.boundaries.IntersectsWith(memberestColl) Then
-                            'MsgBox("found")
-                            'member.isColliding = True
-                            'member.collisionHandled = False
-                            'member.storedDir = member.moveDirection
+                            MsgBox("found")
+                            member.isColliding = True
+                            member.collisionHandled = False
+                            member.storedDir = member.moveDirection
                         End If
                     Else
                         If Me.boundaries.IntersectsWith(memberestColl) Then
@@ -205,7 +205,7 @@
                             'member.collisions(member.collisions.Length - 1) = Me
                         End If
                     End If
-                End If
+                    End If
             End If
         Next
         'Return isColliding
@@ -223,9 +223,9 @@
                     Case "N"
                         graceDir = "N"
                         If Me.storedDir = "E" Then
-                            Me.locationX -= Me.staticSprite.Width / 8
+                            Me.locationX -= Me.staticSprite.Width / 6
                         ElseIf Me.storedDir = "W" Then
-                            Me.locationX += Me.staticSprite.Width / 8
+                            Me.locationX += Me.staticSprite.Width / 6
                         End If
                     Case "S"
                         graceDir = "S"

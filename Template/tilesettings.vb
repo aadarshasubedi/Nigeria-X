@@ -1,6 +1,7 @@
 ﻿Public Class tilesettings
     Dim localTileArray(-1) As String
     Dim trueEnviron As String
+    Dim checkboxes(-1) As CheckBox
     Sub New(consideredItems() As Image, environ As String)
         InitializeComponent()
         Dim consideredString As String = ""
@@ -27,6 +28,8 @@
                 .Location = New Point(40, index * checker.Height)
                 .Text = localTileArray(index)
             End With
+            ReDim Preserve checkboxes(checkboxes.Length)
+            checkboxes(checkboxes.Length - 1) = checker
             Dim checkerPreview As New PictureBox
             With checkerPreview
                 .Image = (Image.FromFile(trueEnviron.Remove(trueEnviron.LastIndexOf("/") + 1) & localTileArray(index)))
@@ -44,7 +47,7 @@
 
     Private Sub btnApply_Click(sender As Object, e As EventArgs) Handles btnApply.Click
         Dim passingFile As String = ""
-        For Each chesspiece As CheckBox In panSettings.Controls
+        For Each chesspiece As CheckBox In checkboxes
             If chesspiece.Checked = True Then
                 passingFile &= chesspiece.Text & vbNewLine
                 MsgBox("writing " & chesspiece.Text & " to file")

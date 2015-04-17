@@ -20,8 +20,12 @@
         terrainFile = groundFile
         populateterrainBrushes()
         buildTerrain(currentTerrain)
-        levelCollisiondata = My.Computer.FileSystem.ReadAllText("graphics/terrain/" & envDir & "/passable.txt")
-        makeCollidables()
+        If My.Computer.FileSystem.FileExists("graphics/terrain/" & envDir & "/passable.txt") Then
+            levelCollisiondata = My.Computer.FileSystem.ReadAllText("graphics/terrain/" & envDir & "/passable.txt")
+            makeCollidables()
+        Else
+            My.Computer.FileSystem.WriteAllText("graphics/terrain/" & envDir & "/passable.txt", "", False)
+        End If
     End Sub
 
     Function populateterrainBrushes()
