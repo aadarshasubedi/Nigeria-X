@@ -1,8 +1,10 @@
 ﻿Public Class entity
+    'Implements System.IDisposable
+    Implements IDisposable
     'the face we show to the world
     Private visObject As sprite
     'the location
-    Private locObject As New Point
+    Private locObject As Point
     Private moveRate As Integer = 2
     Private moveDir As Char = "N"
     Private moving As Boolean
@@ -218,23 +220,23 @@
                     Case "N"
                         graceDir = "N"
                         If Me.storedDir = "E" Then
-                            Me.locationX -= Me.staticSprite.Width / 3
+                            Me.locationX -= Me.staticSprite.Width / 8
                         ElseIf Me.storedDir = "W" Then
-                            Me.locationX += Me.staticSprite.Width / 3
+                            Me.locationX += Me.staticSprite.Width / 8
                         End If
                     Case "S"
                         graceDir = "S"
                         If Me.storedDir = "E" Then
-                            Me.locationX -= Me.staticSprite.Width / 5
+                            Me.locationX -= Me.staticSprite.Width / 8
                         ElseIf Me.storedDir = "W" Then
-                            Me.locationX += Me.staticSprite.Width / 5
+                            Me.locationX += Me.staticSprite.Width / 8
                         End If
                     Case "E"
                         graceDir = "E"
                         If Me.storedDir = "S" Then
-                            Me.locationY -= Me.staticSprite.Width / 5
+                            Me.locationY -= Me.staticSprite.Width / 8
                         ElseIf Me.storedDir = "N" Then
-                            Me.locationY += Me.staticSprite.Width / 5
+                            Me.locationY += Me.staticSprite.Width / 8
                         End If
 
                     Case "W"
@@ -362,4 +364,8 @@
             collide = value
         End Set
     End Property
+
+    Public Sub Dispose1() Implements IDisposable.Dispose
+
+    End Sub
 End Class

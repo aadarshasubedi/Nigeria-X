@@ -135,7 +135,7 @@ Public Class Nigerian
 
         'in this way the screen keeps with the player
         If canvasRight = True And jPlayer.locationX >= canvasCenter.X Then
-            If levelBounds.horizontal.X - SCROLLRATE > (lblCanvas.Location.X + lblCanvas.Width) Then
+            If levelBounds.horizontal.X - 32 > (lblCanvas.Location.X + lblCanvas.Width) Then
                 canvasX -= SCROLLRATE
             End If
         End If

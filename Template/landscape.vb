@@ -61,16 +61,39 @@
             End If
         Next
     End Function
+    Private Function unDuckFile(ByRef duckedArray() As String)
+        Dim factor As Integer
+        Select Case ourSize
+            Case "Tiny"
+                factor = 8
+            Case "Large"
+                factor = 16
+            Case "Huge"
+                factor = 24
+            Case "XXL"
+                factor = 64
+        End Select
+        If duckedArray.Length - 1 > factor Then
+            ReDim Preserve duckedArray(factor)
+        End If
+    End Function
     Sub buildTerrain(ByVal terrainArray() As String)
         Dim terrainString As String = My.Computer.FileSystem.ReadAllText(terrainFile)
         MsgBox("the total terrain file is " & terrainString)
         terrainArray = terrainString.Split(",") 'replace with terrainarray when possible
+        unDuckFile(terrainArray)
         For line As Integer = 1 To (terrainArray.Length - 1)
             terrainArray(line) = Val(terrainArray(line)) 'the I/O method we use includes enters; must use Val to make pure num strings
+            'MsgBox(newS)
             'terrainInteger = trimmer(terrainArray(line))
             'MsgBox("We are currently on line " & line & " which is: " & terrainArray(line))
             For tile As Integer = 0 To terrainArray(line).Length - 1
+                Static goingAmt As Integer = 0
+                Static keepgoing As Boolean = False
                 Static offset As Boolean = False
+                Static notation As Integer = Val(terrainArray(line).Substring(terrainArray(line).IndexOf("+") + 1, 2)) _
+                                             - Val(terrainArray(line).IndexOf("E") - 1)
+                'MsgBox(notation)
                 If tile = 0 Then
                     offset = False
                 End If
@@ -78,27 +101,55 @@
                 'MsgBox("There are " & terrainArray(line).Length - 1 & "tiles in this line, which is " & terrainArray(line))
                 Dim consideredData As String = terrainArray(line).Substring(tile, 1)
                 If consideredData.Contains(".") Then
-                    'offset = True
+                    offset = True
                     Continue For
                 ElseIf consideredData.Contains("E") Then
-                    MsgBox(consideredData)
-                    Continue For
-                End If
-                For consideredBrush As Integer = 0 To terrainBrush.Length - 1
-                    If consideredData = consideredBrush Then
+                    Dim statictile As String = terrainArray(line).Substring(tile - 1, 1)
+                    keepgoing = True
+                    Do While goingAmt < notation
+                        consideredData = statictile
+                        For consideredBrush As Integer = 0 To terrainBrush.Length - 1
+                            If consideredData = consideredBrush Then
 
-                        Dim locx As Integer = tile * 32
-                        Dim locy As Integer = line * 32
-                        If offset Then
-                            locx -= 32
-                        End If
-                        Dim tblock As New terrain(GFX, terrainBrush(consideredBrush), locx, locy - 32)
-                        'MsgBox("tile " & tile & " which is " & consideredData & " of line " & line & "(" & terrainArray(line) & ")" & " has been recognized as " & terrainBrush(consideredBrush).Tag)
-                        tblock.staticSprite.Tag = terrainBrush(consideredBrush).Tag
-                        ReDim Preserve groundObjects(groundObjects.Length)
-                        groundObjects(groundObjects.Length - 1) = tblock
+                                Dim locx As Integer = tile * 32
+                                Dim locy As Integer = line * 32
+                                If offset Then
+                                    locx -= 32
+                                End If
+                                Using tblock As New terrain(GFX, terrainBrush(consideredBrush), locx, locy - 32)
+                                    'MsgBox("tile " & tile & " which is " & consideredData & " of line " & line & "(" & terrainArray(line) & ")" & " has been recognized as " & terrainBrush(consideredBrush).Tag)
+                                    tblock.staticSprite.Tag = terrainBrush(consideredBrush).Tag
+                                    ReDim Preserve groundObjects(groundObjects.Length)
+                                    groundObjects(groundObjects.Length - 1) = tblock
+                                End Using
+                            End If
+                        Next
+                        goingAmt += 1
+                        tile += 1
+                    Loop
+                    keepgoing = False
+                    Exit For
+                Else
+                    If keepgoing = False Then
+                        For consideredBrush As Integer = 0 To terrainBrush.Length - 1
+                            If consideredData = consideredBrush Then
+
+                                Dim locx As Integer = tile * 32
+                                Dim locy As Integer = line * 32
+                                If offset Then
+                                    locx -= 32
+                                End If
+                                Using tblock As New terrain(GFX, terrainBrush(consideredBrush), locx, locy - 32)
+                                    'MsgBox("tile " & tile & " which is " & consideredData & " of line " & line & "(" & terrainArray(line) & ")" & " has been recognized as " & terrainBrush(consideredBrush).Tag)
+                                    tblock.staticSprite.Tag = terrainBrush(consideredBrush).Tag
+                                    ReDim Preserve groundObjects(groundObjects.Length)
+                                    groundObjects(groundObjects.Length - 1) = tblock
+                                End Using
+                            End If
+                        Next
+                        goingAmt = 0
                     End If
-                Next
+                End If
             Next
         Next
     End Sub
@@ -108,15 +159,31 @@
         End Get
     End Property
     Function trimmer(ByRef refobject As String)
+        Dim test As String = refobject
         Dim localbsremover As Integer
-        Try
-            refobject.Remove(refobject.IndexOf("."), 1)
-            refobject.Remove(refobject.IndexOf("E"), 5)
-            localbsremover = refobject
-        Catch ex As Exception
+        'MsgBox(refobject)
+        'MsgBox(test)
+        ' Try
+        For indice As Integer = 0 To refobject.Length - 1
+            'MsgBox(refobject)
+            'If refobject.Substring(indice, 1) = "." Then
+            'MsgBox("skipping")
+            'Continue For
+            'ElseIf refobject.Chars(indice) = "E" Then
+            'Dim locstring As Integer = refobject.Substring(indice + 2, 2)
+            'For index As Integer = 0 To locstring
+            'localbsremover &= refobject.Chars(indice - 1)
+            'Next
+            'MsgBox(localbsremover)
+            'Else
+            'localbsremover &= refobject.Chars(indice)
+            'End If
+            'MsgBox(localbsremover)
+        Next
+        'Catch ex As Exception
 
-        End Try
+        'End Try
 
-        Return localbsremover
+        Return test
     End Function
 End Class
