@@ -1,1 +1,2 @@
-﻿
+﻿dirt.png
+hardened_clay.png

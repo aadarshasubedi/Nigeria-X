@@ -50,7 +50,7 @@
         For Each chesspiece As CheckBox In checkboxes
             If chesspiece.Checked = True Then
                 passingFile &= chesspiece.Text & vbNewLine
-                MsgBox("writing " & chesspiece.Text & " to file")
+                'MsgBox("writing " & chesspiece.Text & " to file")
             ElseIf chesspiece.Checked = False Then
             End If
             My.Computer.FileSystem.WriteAllText(trueEnviron, passingFile, False)

@@ -83,7 +83,7 @@
     End Function
     Sub buildTerrain(ByVal terrainArray() As String)
         Dim terrainString As String = My.Computer.FileSystem.ReadAllText(terrainFile)
-        MsgBox("the total terrain file is " & terrainString)
+        'MsgBox("the total terrain file is " & terrainString)
         terrainArray = terrainString.Split(",") 'replace with terrainarray when possible
         unDuckFile(terrainArray)
         For line As Integer = 1 To (terrainArray.Length - 1)

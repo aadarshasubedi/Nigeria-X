@@ -188,10 +188,10 @@
                 Else
                     If member.collisionHandled And (member.graceDir.Contains(member.moveDirection)) And Not member.moveDirection = member.storedDir Then
                         If Me.boundaries.IntersectsWith(memberestColl) Then
-                            MsgBox("found")
+                            'MsgBox("found")
                             member.isColliding = True
                             member.collisionHandled = False
-                            member.storedDir = member.moveDirection
+                            'member.storedDir = member.moveDirection
                         End If
                     Else
                         If Me.boundaries.IntersectsWith(memberestColl) Then
@@ -226,28 +226,36 @@
                             Me.locationX -= Me.staticSprite.Width / 6
                         ElseIf Me.storedDir = "W" Then
                             Me.locationX += Me.staticSprite.Width / 6
+                        ElseIf Me.storedDir = "S" Then
+                            Me.locationY -= Me.staticSprite.Width / 6
                         End If
                     Case "S"
                         graceDir = "S"
                         If Me.storedDir = "E" Then
-                            Me.locationX -= Me.staticSprite.Width / 8
+                            Me.locationX -= Me.staticSprite.Width / 6
                         ElseIf Me.storedDir = "W" Then
-                            Me.locationX += Me.staticSprite.Width / 8
+                            Me.locationX += Me.staticSprite.Width / 6
+                        ElseIf Me.storedDir = "N" Then
+                            Me.locationY += Me.staticSprite.Width / 6
                         End If
                     Case "E"
                         graceDir = "E"
                         If Me.storedDir = "S" Then
-                            Me.locationY -= Me.staticSprite.Width / 8
+                            Me.locationY -= Me.staticSprite.Width / 6
                         ElseIf Me.storedDir = "N" Then
-                            Me.locationY += Me.staticSprite.Width / 8
+                            Me.locationY += Me.staticSprite.Width / 6
+                        ElseIf Me.storedDir = "W" Then
+                            Me.locationX += Me.staticSprite.Width / 6
                         End If
 
                     Case "W"
                         graceDir = "W"
                         If Me.storedDir = "S" Then
-                            Me.locationY -= Me.staticSprite.Width / 5
+                            Me.locationY -= Me.staticSprite.Width / 6
                         ElseIf Me.storedDir = "N" Then
-                            Me.locationY += Me.staticSprite.Width / 5
+                            Me.locationY += Me.staticSprite.Width / 6
+                        ElseIf Me.storedDir = "E" Then
+                            Me.locationX -= Me.staticSprite.Width / 6
                         End If
                 End Select
                 Me.MoveSpeed = realMove
