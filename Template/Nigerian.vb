@@ -98,23 +98,23 @@ Public Class Nigerian
         'call the Place method of all objects intended to be visible to ensure that they show up
         'on this refresh
         ground.DrawMe()
-        For Each block As terrain In ground.groundObjects
-            block.calcCollision(enemies)
-            block.calcCollision(players)
-        Next
+        'For Each block As terrain In ground.groundObjects
+        ' block.calcCollision(enemies)
+        'block.calcCollision(players)
+        'Next
         jPlayer.calcCollision(ground.groundObjects)
-        jPlayer.entityPlace()
         jPlayer.tryMove()
+        jPlayer.entityPlace()
         For Each shot As entity In projectiles
             shot.entityPlace()
             shot.entityMovement()
         Next
         For Each thing As entity In enemies
-            'thing.calcCollision(ground.groundObjects)
+            thing.calcCollision(ground.groundObjects)
             thing.entityPlace()
             thing.tryMove()
         Next
-        
+
 
 
         updatelevelBounds()

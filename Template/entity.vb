@@ -52,6 +52,7 @@
         bounds.Location = locObject
         bounds.Width = visObject.current.Width
         bounds.Height = visObject.current.Height
+        storedDir = moveDir
     End Sub
     Sub New(ByVal ovrcanvas As Graphics, image As System.Drawing.Image, locx As Integer, locy As Integer)
         With visObject
@@ -178,7 +179,7 @@
             pcanvas.DrawImage(visObject.current, locObject)
         End If
     End Sub
-    Function calcCollision(ByVal objects() As entity)
+    Function calcCollision1(ByVal objects() As entity)
         collisions = objects
         For Each member As entity In objects
             If Me.shouldCollide And member.shouldCollide Then
@@ -190,8 +191,8 @@
                         If Me.boundaries.IntersectsWith(memberestColl) Then
                             'MsgBox("found")
                             member.isColliding = True
-                            member.collisionHandled = False
-                            'member.storedDir = member.moveDirection
+                            'member.collisionHandled = False
+                            member.storedDir = member.moveDirection
                         End If
                     Else
                         If Me.boundaries.IntersectsWith(memberestColl) Then
@@ -205,12 +206,12 @@
                             'member.collisions(member.collisions.Length - 1) = Me
                         End If
                     End If
-                    End If
+                End If
             End If
         Next
         'Return isColliding
     End Function
-    Sub tryMove()
+    Sub tryMove1()
         Static realMove As Integer = Me.MoveSpeed
         If Me.isColliding Then
             If Me.moveDir = Me.storedDir Then
@@ -263,9 +264,50 @@
             End If
             'entityMovement()
         Else
-
+            entityMovement()
         End If
-        entityMovement()
+
+    End Sub
+    Function calcCollision(ByVal objects() As entity)
+        collisions = objects
+        For Each member As entity In objects
+            If Me.shouldCollide And member.shouldCollide Then
+                Dim meColl As Rectangle = Me.boundaries
+                'If Me.moveDir <> Me.storedDir Then
+                'Else
+                Select Case Me.moveDir
+                    Case "N"
+                        meColl.Offset(0, Me.MoveSpeed * -1)
+                        Me.storedDir = "N"
+                    Case "S"
+                        meColl.Offset(0, Me.MoveSpeed)
+                        Me.storedDir = "S"
+                    Case "E"
+                        meColl.Offset(Me.MoveSpeed, 0)
+                        Me.storedDir = "E"
+                    Case "W"
+                        meColl.Offset(Me.MoveSpeed * -1, 0)
+                        Me.storedDir = "W"
+
+                End Select
+                If meColl.IntersectsWith(member.boundaries) Then
+                    'MsgBox("collision")
+                    Me.isColliding = True
+                    Exit For
+                Else
+                    'MsgBox("no collision")
+                    Me.isColliding = False
+                End If
+            End If
+            'End If
+        Next
+    End Function
+    Sub tryMove()
+        If Me.isColliding = True Then
+        Else
+            entityMovement()
+        End If
+
     End Sub
     Sub entityMovement()
         If moving = True Then

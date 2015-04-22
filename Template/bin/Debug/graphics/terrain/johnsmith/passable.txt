@@ -1,2 +1,9 @@
 ﻿dirt.png
+dirt.png
+dirt.png
+dirt.png
+hardened_clay.png
+dirt.png
+hardened_clay.png
+dirt.png
 hardened_clay.png
